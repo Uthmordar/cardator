@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/Uthmordar/Staticify.svg)](https://travis-ci.org/Uthmordar/Staticify)
+[![Build Status](https://travis-ci.org/Uthmordar/cardator.svg)](https://travis-ci.org/Uthmordar/cardator)
 
 ## Cardator Package
 

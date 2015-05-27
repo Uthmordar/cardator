@@ -56,6 +56,6 @@ class Thing implements iCard{
             return $this->params[$name];
         }
 
-        throw new \RuntimeException("Undefined property  $name for Thing");
+        throw new \RuntimeException("Undefined property $name for Thing");
     }
 }
