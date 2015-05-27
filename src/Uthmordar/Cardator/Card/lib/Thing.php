@@ -3,6 +3,7 @@
 namespace Uthmordar\Cardator\Card\lib;
 
 class Thing implements iCard{
+    protected $parents;
     protected $description;
     protected $image;
     protected $mainEntity;
@@ -11,7 +12,7 @@ class Thing implements iCard{
     protected $type="http://schema.org/Thing";
     
     protected $params=[];
-    
+        
     public function __get($name){
         return $this->getCardProperty($name);
     }
@@ -57,5 +58,14 @@ class Thing implements iCard{
         }
 
         throw new \RuntimeException("Undefined property $name for Thing");
+    }
+    
+    /**
+     * get card type
+     * @return type
+     */
+    public function getCallifiedName(){
+        $reflect=new \ReflectionClass($this);
+        return $reflect->getShortName();
     }
 }

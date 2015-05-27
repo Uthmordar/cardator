@@ -53,4 +53,11 @@ class CardTest extends \PHPUnit_Framework_TestCase{
         $this->setExpectedException('RuntimeException', "Undefined property unknown for Thing");
         $this->card->unknown;
     }
+    
+    /**
+     * test card type value access
+     */
+    public function testCallifiedName(){
+        $this->assertEquals('Thing', $this->card->getCallifiedName());
+    }
 }
