@@ -1,0 +1,7 @@
+/vendor
+/cover
+composer.phar
+composer.lock
+.DS_Store
+index.php
+test.html

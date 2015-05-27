@@ -1,0 +1,21 @@
+{
+    "name": "uthmordar/cardator",
+    "description": "parse web pages and generate card object from microdata",
+    "authors": [
+        {
+            "name": "Tanguy Godin",
+            "email": "tanguyrygodin@gmail.com"
+        }
+    ],
+    "license": "MIT",
+    "require": {
+        "php": ">=5.4.0",
+        "fabpot/goutte": "2.0.*@dev"
+    },
+    "autoload": {
+        "psr-0": {
+            "Uthmordar\\Cardator": "src/"
+        }
+    },
+    "minimum-stability": "dev"
+}
