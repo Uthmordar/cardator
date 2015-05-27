@@ -12,8 +12,8 @@ class CardGenerator implements iCardatorGenerator{
      * @return type
      */
     public function createCard($type){
-        $card= $this->libPath . $type;
-        
+        $card= $this->libPath . ucfirst($type);
+    
         $this->checkLib($card, $type);
         $this->card=new $card;
 

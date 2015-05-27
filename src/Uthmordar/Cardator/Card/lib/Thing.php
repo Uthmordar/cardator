@@ -4,6 +4,10 @@ namespace Uthmordar\Cardator\Card\lib;
 
 class Thing implements iCard{
     protected $parents;
+    protected $additionalType;
+    protected $alternateName;
+    protected $potentialAciton;
+    protected $sameAs;
     protected $description;
     protected $image;
     protected $mainEntity;
