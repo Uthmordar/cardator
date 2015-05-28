@@ -2,6 +2,8 @@
 
 namespace Uthmordar\Cardator;
 
+use Uthmordar\Cardator\Parser\MicroDataCrawler;
+
 class Cardator{
     private $generator;
     private $container;
@@ -33,13 +35,32 @@ class Cardator{
      * add a card to card container storage
      * @param type $card
      */
-    public function saveCard($card){
+    public function saveCard(Card\lib\iCard $card){
         $this->container->addCard($card);
     }
     
+    /**
+     * crawl given url && generate card from page content
+     * @param type $url
+     */
     public function crawl($url){
         $this->parser->setCrawler($url);
-        $this->parser->getCrawler()->filter('[itemscope]')->each(function($node) use($url){
+        $scope=$this->parser->getCrawler()->filter('[itemscope]');
+        if($scope){
+            $this->setCardFromMD($scope, $url);
+        }else{
+            $this->setGenericCard($url);
+        }
+        $this->checkRelationship();
+    }
+    
+    /**
+     * create card from microdata
+     * @param type $scope
+     * @param type $url
+     */
+    private function setCardFromMD($scope, $url){
+        $scope->each(function($node) use($url){
             $type=$this->getCardTypeFromParser($node);
             try{
                 $card=$this->createCard($type);
@@ -48,13 +69,64 @@ class Cardator{
             }
             $card->child=count($node->filter('[itemscope]'))-1;
             $card->url=$url;
-            Parser\MicroDataCrawler::manageItemIdProperty($node, $card);
-            Parser\MicroDataCrawler::getScopeContent($node, $card);
+            MicroDataCrawler::manageItemIdProperty($node, $card);
+            MicroDataCrawler::getScopeContent($node, $card);
             $this->saveCard($card);
         });
     }
     
-    public function getCardTypeFromParser($node){
+    /**
+     * create card from no microdata page
+     * @param type $url
+     */
+    private function setGenericCard($url){
+        $card=$this->createCard('Thing');
+        $card->url=$url;
+        /*
+         * get some standard informations here
+         * 
+         */
+        $this->saveCard($card);
+    }
+    
+    /**
+     * check if card has registered relationship
+     */
+    private function checkRelationship(){
+        $cards=$this->getCards();
+        $cardsArray=[];
+        foreach($cards as $card){
+            $cardsArray[]=$card;
+        }
+        $i=0;
+        foreach($cardsArray as $card){
+            if($card->childList){
+                $this->setRelationship($card, $i, $cardsArray);
+            }
+            $i++;
+        }
+    }
+    
+    /**
+     * bind subcard to main card
+     * @param \Uthmordar\Cardator\Card\lib\iCard $card
+     * @param type $i
+     * @param type $cards
+     */
+    private function setRelationship(Card\lib\iCard $card, $i, $cards){
+        $j=0;
+        foreach($card->childList as $prop){
+            $card->$prop=$cards[$i+$j];
+            $j=$j+$cards[$i+$j]->child;
+        }
+    }
+    
+    /**
+     * determine card type by itemtype or set default Thing type
+     * @param \Symfony\Component\DomCrawler\Crawler $node
+     * @return type
+     */
+    private function getCardTypeFromParser(\Symfony\Component\DomCrawler\Crawler $node){
         $typeUrl=($node->attr('itemtype'))? $node->attr('itemtype') : 'Thing';
         $typeSplit=explode('/', $typeUrl);
         return array_pop($typeSplit);

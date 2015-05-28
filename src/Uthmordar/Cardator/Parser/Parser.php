@@ -12,6 +12,11 @@ class Parser implements iParser{
         $this->client=new Client();
     }
     
+    /**
+     * 
+     * @param type $url
+     * @return \Uthmordar\Cardator\Parser\Parser
+     */
     public function setCrawler($url){
         /*$fUrl=filter_var($url, FILTER_VALIDATE_URL, FILTER_FLAG_PATH_REQUIRED);
         if(!$fUrl){
@@ -21,6 +26,10 @@ class Parser implements iParser{
         return $this;
     }
     
+    /**
+     * 
+     * @return type
+     */
     public function getCrawler(){
         return $this->crawler;
     }
