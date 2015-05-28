@@ -3,6 +3,7 @@
 use Uthmordar\Cardator\Cardator;
 use Uthmordar\Cardator\Card\CardGenerator;
 use Uthmordar\Cardator\Card\CardContainer;
+use Uthmordar\Cardator\Parser\Parser;
 
 
 class CardTest extends \PHPUnit_Framework_TestCase{
@@ -11,7 +12,7 @@ class CardTest extends \PHPUnit_Framework_TestCase{
     private $card;
     
     public function setUp(){
-        $this->cardator=new Cardator(new CardGenerator, new CardContainer);
+        $this->cardator=new Cardator(new CardGenerator, new CardContainer, new Parser);
         $this->card=$this->cardator->createCard('Thing');
     }
 
