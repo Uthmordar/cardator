@@ -7,14 +7,15 @@ class CardGenerator implements iCardatorGenerator{
     private $libPath="\Uthmordar\Cardator\Card\lib\\";
     
     /**
+     * set card from library by className
      * 
-     * @param type $type
-     * @return type
+     * @param classQualifiedName $type
+     * @return iCard
      */
     public function createCard($type){
         $card= $this->libPath . ucfirst($type);
     
-        $this->checkLib($card, $type);
+        $this->checkClassExists($card, $type);
         $this->card=new $card;
 
         return $this->card;
@@ -22,12 +23,12 @@ class CardGenerator implements iCardatorGenerator{
     
     /**
      * 
-     * @param type $className
-     * @param type $type
+     * @param classQualifiedName $className
+     * @param card type $type
      * @return boolean
      * @throws \RuntimeException
      */
-    public function checkLib($className, $type){
+    public function checkClassExists($className, $type){
         if(!class_exists($className)){
             throw new \RuntimeException("$type type card not found.");
         }

@@ -17,7 +17,7 @@ class Cardator{
     
     /**
      * 
-     * @param type cardType or cardType array $cardType
+     * @param string cardType or cardType array $cardType
      */
     public function addExcept($cardType){
         $this->container->addExcept($cardType);
@@ -25,7 +25,7 @@ class Cardator{
     
     /**
      * 
-     * @param type cardType or cardType array $cardType
+     * @param string cardType or cardType array $cardType
      */
     public function addOnly($cardType){
         $this->container->addOnly($cardType);
@@ -39,8 +39,9 @@ class Cardator{
     }
     
     /**
-     * get new card instance by type 
-     * @param type $type
+     * get new card instance by type
+     * 
+     * @param string $type card qualified name
      * @return type
      */
     public function createCard($type){
@@ -49,7 +50,8 @@ class Cardator{
     
     /**
      * add a card to card container storage
-     * @param type $card
+     * 
+     * @param iCard $card
      */
     public function saveCard(Card\lib\iCard $card){
         $this->container->addCard($card);
@@ -57,7 +59,8 @@ class Cardator{
     
     /**
      * crawl given url && generate card from page content
-     * @param type $url
+     * 
+     * @param string $url
      */
     public function crawl($url){
         $this->parser->setCrawler($url);
@@ -72,8 +75,9 @@ class Cardator{
     
     /**
      * create card from microdata
-     * @param type $scope
-     * @param type $url
+     * 
+     * @param Crawler $scope
+     * @param string $url
      */
     private function setCardFromMD($scope, $url){
         $scope->each(function($node) use($url){
@@ -98,7 +102,8 @@ class Cardator{
     
     /**
      * create card from no microdata page
-     * @param type $url
+     * 
+     * @param string $url
      */
     private function setGenericCard($url){
         $card=$this->createCard('Thing');
@@ -128,9 +133,10 @@ class Cardator{
     
     /**
      * bind subcard to main card
+     * 
      * @param \Uthmordar\Cardator\Card\lib\iCard $card
-     * @param type $i
-     * @param type $cards
+     * @param number $i
+     * @param array $cards
      */
     private function setRelationship(Card\lib\iCard $card, $i, $cards){
         $j=1;
@@ -142,6 +148,7 @@ class Cardator{
     
     /**
      * determine card type by itemtype or set default Thing type
+     * 
      * @param \Symfony\Component\DomCrawler\Crawler $node
      * @return type
      */
@@ -153,7 +160,7 @@ class Cardator{
     
     /**
      * 
-     * @param type $name
+     * @param string $name card property
      * @param \Closure $closure
      */
     public function addPostProcessTreatment($name, \Closure $closure){
@@ -161,7 +168,7 @@ class Cardator{
     }
     
     /**
-     * 
+     * run post processing operations
      */
     public function doPostProcess(){
         $this->container->doPostProcess();

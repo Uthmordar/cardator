@@ -3,12 +3,12 @@
 namespace Uthmordar\Cardator\Card;
 
 class CardProcessor extends CardContainer{
-    protected $filter=[
-    ];
+    protected $filter=[];
     private $except=[];
     private $only=[];
     
     /**
+     * @param boolean $json true: result as json_encode, false: result as SPLObjectStorage collection
      * @return \Uthmordar\Cardator\Card\CardContainer
      */
     public function getCards($json=false){
@@ -17,7 +17,7 @@ class CardProcessor extends CardContainer{
         }
         $collection=new CardCollection;
         foreach($this as $card){
-            if($this->isAllowedType($card->getCallifiedName())){
+            if($this->isAllowedType($card->getQualifiedName())){
                 $collection->attach($card);
             }
         }
@@ -37,7 +37,7 @@ class CardProcessor extends CardContainer{
     
     /**
      * 
-     * @param type cardType or cardType array $cardType
+     * @param cardQualifiedName or cardQualifiedName array $cardType
      */
     public function addOnly($cardType){
         if(is_array($cardType)){
@@ -49,7 +49,7 @@ class CardProcessor extends CardContainer{
     
     /**
      * 
-     * @param type cardType or cardType array $cardType
+     * @param cardQualifiedName or cardQualifiedName array $cardType
      */
     public function addExcept($cardType){
         if(is_array($cardType)){
@@ -61,7 +61,7 @@ class CardProcessor extends CardContainer{
     
     /**
      * 
-     * @param type $type
+     * @param cardQualifiedName $type
      */
     private function isAllowedType($type){
         if((empty($this->only) && empty($this->except)) || (in_array($type, $this->only) && !in_array($type, $this->except))){
@@ -72,7 +72,8 @@ class CardProcessor extends CardContainer{
     
     /**
      * add custom filter
-     * @param type $name
+     * 
+     * @param string $name card property
      * @param \Closure $filter ($name, $value)
      */
     public function addPostProcessTreatment($name, \Closure $filter){
@@ -92,12 +93,13 @@ class CardProcessor extends CardContainer{
     
     /**
      * filter on property
-     * @param type $card
-     * @param type $prop
-     * @param type $closure
+     * 
+     * @param iCard $card
+     * @param string $prop property
+     * @param Closure $closure
      * @return boolean
      */
-    public function applyFilterOnProperty($card, $prop, \Closure $closure){
+    public function applyFilterOnProperty(lib\iCard $card, $prop, \Closure $closure){
         try{
             $card->$prop=$closure($prop, $card->$prop);
         }catch(\RuntimeException $e){
@@ -105,6 +107,10 @@ class CardProcessor extends CardContainer{
         }
     }
     
+    /**
+     * 
+     * @return json
+     */
     private function formatCollectionToJson(){
         $data=[];
         foreach($this as $card){
@@ -114,10 +120,15 @@ class CardProcessor extends CardContainer{
         return json_encode($data);
     }
     
+    /**
+     * 
+     * @param \Uthmordar\Cardator\Card\lib\iCard $card
+     * @return array
+     */
     private function createArrayCard(lib\iCard $card){
         $array=[
             'type'=>$card->type,
-            'class'=>$card->getCallifiedName()
+            'class'=>$card->getQualifiedName()
         ];
         foreach($card->properties as $property){
             if($card->$property instanceof \DateTime){

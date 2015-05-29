@@ -14,7 +14,7 @@ class Parser implements iParser{
     
     /**
      * 
-     * @param type $url
+     * @param string $url
      * @return \Uthmordar\Cardator\Parser\Parser
      */
     public function setCrawler($url){

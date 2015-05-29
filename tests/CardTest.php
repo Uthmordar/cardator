@@ -59,6 +59,6 @@ class CardTest extends \PHPUnit_Framework_TestCase{
      * test card type value access
      */
     public function testCallifiedName(){
-        $this->assertEquals('Thing', $this->card->getCallifiedName());
+        $this->assertEquals('Thing', $this->card->getQualifiedName());
     }
 }

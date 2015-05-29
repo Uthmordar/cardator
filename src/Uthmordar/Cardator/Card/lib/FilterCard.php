@@ -15,8 +15,8 @@ abstract class FilterCard{
   
     /**
      * 
-     * @param type $name
-     * @param type $value
+     * @param string $name property 
+     * @param string/DateTime $value property value
      * @return boolean
      */
     protected function filterValue($name, $value){
@@ -33,8 +33,8 @@ abstract class FilterCard{
     
     /**
      * 
-     * @param type $name
-     * @param type $value
+     * @param string $name property 
+     * @param string/DateTime $value property value
      * @return boolean
      */
     protected function noRegister($name, $value){
@@ -43,7 +43,8 @@ abstract class FilterCard{
     
     /**
      * get value and return datetime
-     * @param type $name
+     * 
+     * @param string $name property
      * @param \DateTime $value
      * @return \DateTime
      */
@@ -55,7 +56,8 @@ abstract class FilterCard{
     
     /**
      * add custom filter
-     * @param type $name
+     * 
+     * @param string $name property
      * @param \Closure $filter ($name, $value)
      */
     protected function addFilter($name, \Closure $filter){

@@ -41,8 +41,8 @@ class Thing extends FilterCard implements iCard{
     
     /**
      * 
-     * @param type $name
-     * @param type $value
+     * @param string $name
+     * @param string || iCard || DateTime $value
      * @return \Uthmordar\Cardator\Card\lib\Thing
      */
     protected function setCardProperty($name, $value){
@@ -58,7 +58,7 @@ class Thing extends FilterCard implements iCard{
     
     /**
      * 
-     * @param type $name
+     * @param string $name
      * @return type
      * @throws \RuntimeException
      */
@@ -70,14 +70,14 @@ class Thing extends FilterCard implements iCard{
             return $this->params[$name];
         }
 
-        throw new \RuntimeException("Undefined property $name for {$this->getCallifiedName()}");
+        throw new \RuntimeException("Undefined property $name for {$this->getQualifiedName()}");
     }
       
     /**
      * get card type
      * @return type
      */
-    public function getCallifiedName(){
+    public function getQualifiedName(){
         $reflect=new \ReflectionClass($this);
         return $reflect->getShortName();
     }

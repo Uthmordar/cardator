@@ -3,15 +3,16 @@
 namespace Uthmordar\Cardator\Parser;
 
 use \Symfony\Component\DomCrawler\Crawler;
+use \Uthmordar\Cardator\Card\lib\iCard;
 
 class MicroDataCrawler{
     /**
-     * parse itemscope children
+     * parse itemscope properties
      * 
      * @param Crawler $node
-     * @param \Uthmordar\Cardator\Card\lib\iCard $card
+     * @param iCard $card
      */
-    public static function getScopeContent(Crawler $node, \Uthmordar\Cardator\Card\lib\iCard $card){
+    public static function getScopeContent(Crawler $node, iCard $card){
         $content=$node->html();
         $cr=new Crawler($content);
         $cr->filter('[itemprop]')->each(function($node) use($card){
@@ -19,14 +20,14 @@ class MicroDataCrawler{
         });
     }
     
-    /**
+    /**     
      * get itemprop given value && set the couple in Card
      * 
-     * @param type $node
-     * @param type $card
+     * @param Crawler $node
+     * @param iCard $card
      * @return boolean
      */
-    private static function setCardProperty($node, $card){
+    private static function setCardProperty(Crawler $node, iCard $card){
         $property=$node->attr('itemprop');
         if($node->parents()->attr('itemscope')!==null){return false;}
         if(self::nestedScope($node, $card, $property)){return true;}
@@ -39,12 +40,12 @@ class MicroDataCrawler{
     /**
      * get value if node is img tag
      * 
-     * @param type $node
-     * @param type $prop
-     * @param type $card
+     * @param Crawler $node
+     * @param string $prop
+     * @param iCard $card
      * @return boolean
      */
-    private static function manageImgProperty($node, $prop, $card){
+    private static function manageImgProperty(Crawler $node, $prop, iCard $card){
         if($node->attr('src')){
             $card->$prop=$node->attr('src');
             return true;
@@ -53,12 +54,12 @@ class MicroDataCrawler{
     
     /**
      * 
-     * @param type $node
-     * @param type $prop
-     * @param type $card
+     * @param Crawler $node
+     * @param string $prop
+     * @param iCard $card
      * @return boolean
      */
-    private static function manageNumericProperty($node, $prop, $card){
+    private static function manageNumericProperty(Crawler $node, $prop, iCard $card){
         if($node->attr('value')){
             $card->$prop=$node->attr('value');
             return true;
@@ -68,12 +69,12 @@ class MicroDataCrawler{
     /**
      * get value if node is a tag
      * 
-     * @param type $node
-     * @param type $prop
-     * @param type $card
+     * @param Crawler $node
+     * @param string $prop
+     * @param iCard $card
      * @return boolean
      */
-    private static function manageLinkProperty($node, $prop, $card){
+    private static function manageLinkProperty(Crawler $node, $prop, iCard $card){
         if($node->attr('href')){
             $card->$prop=$node->attr('href');
             return true;
@@ -87,7 +88,7 @@ class MicroDataCrawler{
      * @param \Uthmordar\Cardator\Card\lib\iCard $card
      * @return boolean
      */
-    public static function manageItemIdProperty(Crawler $node,  \Uthmordar\Cardator\Card\lib\iCard $card){
+    public static function manageItemIdProperty(Crawler $node, iCard $card){
         if($node->attr('itemid')){
             $id=$node->attr('itemid');
             $split=explode(':', $id);
@@ -103,7 +104,7 @@ class MicroDataCrawler{
      * @param \Uthmordar\Cardator\Card\lib\iCard $card
      * @return boolean
      */
-    public static function manageItemrefProperty(Crawler $node,  \Uthmordar\Cardator\Card\lib\iCard $card, $crawler){
+    public static function manageItemrefProperty(Crawler $node, iCard $card, $crawler){
         if($node->attr('itemref')){
             $ids=explode(' ', $node->attr('itemref'));
             foreach($ids as $id){
@@ -118,12 +119,12 @@ class MicroDataCrawler{
     /**
      * get nested itemscope && register it in Card
      * 
-     * @param type $node
-     * @param type $card
+     * @param Crawler $node
+     * @param iCard $card
      * @param type $property
      * @return boolean
      */
-    private static function nestedScope($node, $card, $property){
+    private static function nestedScope(Crawler $node, iCard $card, $property){
         if($node->attr('itemscope')!==null){
             $data=$card->childList;
             array_push($data, $property);
