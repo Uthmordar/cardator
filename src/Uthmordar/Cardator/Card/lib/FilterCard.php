@@ -48,9 +48,9 @@ abstract class FilterCard{
      * @return \DateTime
      */
     protected function filterDateTime($name, $value){
-        $value=new \DateTime($value);
+        $val=new \DateTime($value);
         $this->properties[]=$name;
-        return $value;
+        return $val;
     }
     
     /**

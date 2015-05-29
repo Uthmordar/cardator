@@ -78,8 +78,10 @@ class Cardator{
             }
             $card->child=count($node->filter('[itemscope]'))-1;
             $card->url=$url;
+            
             MicroDataCrawler::manageItemIdProperty($node, $card);
             MicroDataCrawler::getScopeContent($node, $card);
+            
             $this->saveCard($card);
         });
     }

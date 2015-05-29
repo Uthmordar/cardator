@@ -81,4 +81,22 @@ class Thing extends FilterCard implements iCard{
         $reflect=new \ReflectionClass($this);
         return $reflect->getShortName();
     }
+    
+    /**
+     * 
+     * @return type
+     */
+    public function getParents(){
+        return explode('\\',$this->parents);
+    }
+    
+    /**
+     * 
+     * @return type
+     */
+    public function getDirectParent(){
+        $parent=get_parent_class($this);
+        $reflect=new \ReflectionClass($parent);
+        return $reflect->getShortName();
+    }
 }
