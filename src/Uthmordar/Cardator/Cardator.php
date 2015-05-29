@@ -8,7 +8,6 @@ class Cardator{
     private $generator;
     private $container;
     private $parser;
-    private $json=false;
     
     public function __construct(Card\iCardatorGenerator $generator, Card\iCardatorContainer $container, Parser\iParser $parser){
         $this->generator=$generator;
@@ -31,20 +30,12 @@ class Cardator{
     public function addOnly($cardType){
         $this->container->addOnly($cardType);
     }
-    
-    /**
-     * set output format: true => json, false => array of hydrated classes
-     * @param \Uthmordar\Cardator\Boolean $val
-     */
-    public function setJson(Boolean $val){
-        $this->json=$val;
-    }
-    
+        
     /**
      * @return splObject containing all save cards
      */
-    public function getCards(){
-        return $this->container->getCards();
+    public function getCards($json=false){
+        return $this->container->getCards($json);
     }
     
     /**
@@ -98,6 +89,7 @@ class Cardator{
             $card->url=$url;
             
             MicroDataCrawler::manageItemIdProperty($node, $card);
+            MicroDataCrawler::manageItemrefProperty($node, $card, $this->parser->getCrawler());
             MicroDataCrawler::getScopeContent($node, $card);
             
             $this->saveCard($card);

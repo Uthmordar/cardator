@@ -32,6 +32,7 @@ class MicroDataCrawler{
         if(self::nestedScope($node, $card, $property)){return true;}
         if(self::manageImgProperty($node, $property, $card)){return true;}
         if(self::manageLinkProperty($node, $property, $card)){return true;}
+        if(self::manageNumericProperty($node, $property, $card)){return true;}
         $card->$property=trim($node->text());
     }
     
@@ -46,6 +47,20 @@ class MicroDataCrawler{
     private static function manageImgProperty($node, $prop, $card){
         if($node->attr('src')){
             $card->$prop=$node->attr('src');
+            return true;
+        }
+    }
+    
+    /**
+     * 
+     * @param type $node
+     * @param type $prop
+     * @param type $card
+     * @return boolean
+     */
+    private static function manageNumericProperty($node, $prop, $card){
+        if($node->attr('value')){
+            $card->$prop=$node->attr('value');
             return true;
         }
     }
@@ -77,6 +92,25 @@ class MicroDataCrawler{
             $id=$node->attr('itemid');
             $split=explode(':', $id);
             $card->$split[1]=$split[2];
+            return true;
+        }
+    }
+    
+    /**
+     * get itemid prop value
+     * 
+     * @param Crawler $node
+     * @param \Uthmordar\Cardator\Card\lib\iCard $card
+     * @return boolean
+     */
+    public static function manageItemrefProperty(Crawler $node,  \Uthmordar\Cardator\Card\lib\iCard $card, $crawler){
+        if($node->attr('itemref')){
+            $ids=explode(' ', $node->attr('itemref'));
+            foreach($ids as $id){
+                $crawler->filter('#'.trim($id))->each(function($node) use($card){
+                   self::getScopeContent($node, $card); 
+                });
+            }
             return true;
         }
     }
