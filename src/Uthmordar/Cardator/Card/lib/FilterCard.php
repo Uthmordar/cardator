@@ -13,22 +13,52 @@ abstract class FilterCard{
         'deathDate'=>'filterDateTime',
         'foundingDate'=>'filterDateTime'];
   
+    /**
+     * 
+     * @param type $name
+     * @param type $value
+     * @return boolean
+     */
     protected function filterValue($name, $value){
         if(!empty($this->filter[$name])){
             $filter=$this->filter[$name];
+            if(is_callable($filter)){
+                return $filter($name, $value);
+            }
             return $this->$filter($name, $value);
         }
         $this->properties[]=$name;
         return false;
     }
     
+    /**
+     * 
+     * @param type $name
+     * @param type $value
+     * @return boolean
+     */
     protected function noRegister($name, $value){
         return false;
     }
     
+    /**
+     * get value and return datetime
+     * @param type $name
+     * @param \DateTime $value
+     * @return \DateTime
+     */
     protected function filterDateTime($name, $value){
         $value=new \DateTime($value);
         $this->properties[]=$name;
         return $value;
+    }
+    
+    /**
+     * add custom filter
+     * @param type $name
+     * @param \Closure $filter ($name, $value)
+     */
+    protected function addFilter($name, \Closure $filter){
+        $this->filter[$name]=$filter;
     }
 }

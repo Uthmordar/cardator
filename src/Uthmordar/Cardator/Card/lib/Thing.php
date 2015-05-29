@@ -19,6 +19,10 @@ class Thing extends FilterCard implements iCard{
     protected $type="http://schema.org/Thing";
     
     protected $params=[];
+    
+    public function __construct(){
+        $this->addFilter('child', function($name, $value){return false;});
+    }
         
     public function __get($name){
         return $this->getCardProperty($name);
@@ -42,13 +46,13 @@ class Thing extends FilterCard implements iCard{
      * @return \Uthmordar\Cardator\Card\lib\Thing
      */
     protected function setCardProperty($name, $value){
-        $val=$this->filterValue($name, $value);
-        $value=($val)? $val : $value;
+        $valF=$this->filterValue($name, $value);
+        $val=($valF)? $valF : $value;
         if(property_exists($this, $name)){
-            $this->$name=$value;
+            $this->$name=$val;
             return $this;
         }
-        $this->params[$name]=$value;
+        $this->params[$name]=$val;
         return $this;
     }
     
