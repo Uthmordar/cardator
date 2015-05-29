@@ -2,7 +2,7 @@
 
 namespace Uthmordar\Cardator\Card\lib;
 
-class Thing implements iCard{
+class Thing extends FilterCard implements iCard{
     protected $child=0;
     protected $childList=[];
     protected $parents;
@@ -15,6 +15,7 @@ class Thing implements iCard{
     protected $mainEntity;
     protected $name;
     protected $url;
+    protected $properties=[];
     protected $type="http://schema.org/Thing";
     
     protected $params=[];
@@ -41,6 +42,8 @@ class Thing implements iCard{
      * @return \Uthmordar\Cardator\Card\lib\Thing
      */
     protected function setCardProperty($name, $value){
+        $val=$this->filterValue($name, $value);
+        $value=($val)? $val : $value;
         if(property_exists($this, $name)){
             $this->$name=$value;
             return $this;
@@ -59,13 +62,13 @@ class Thing implements iCard{
         if(isset($this->$name)){
             return $this->$name;
         }
-        if (array_key_exists($name, $this->params)) {
+        if(array_key_exists($name, $this->params)) {
             return $this->params[$name];
         }
 
         throw new \RuntimeException("Undefined property $name for Thing");
     }
-    
+      
     /**
      * get card type
      * @return type

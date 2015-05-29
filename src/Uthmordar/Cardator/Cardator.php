@@ -8,11 +8,20 @@ class Cardator{
     private $generator;
     private $container;
     private $parser;
+    private $json=false;
     
     public function __construct(Card\iCardatorGenerator $generator, Card\iCardatorContainer $container, Parser\iParser $parser){
         $this->generator=$generator;
         $this->container=$container;
         $this->parser=$parser;
+    }
+    
+    /**
+     * set output format: true => json, false => array of hydrated classes
+     * @param \Uthmordar\Cardator\Boolean $val
+     */
+    public function setJson(Boolean $val){
+        $this->json=$val;
     }
     
     /**
@@ -93,15 +102,11 @@ class Cardator{
      * check if card has registered relationship
      */
     private function checkRelationship(){
-        $cards=$this->getCards();
-        $cardsArray=[];
-        foreach($cards as $card){
-            $cardsArray[]=$card;
-        }
+        $cards=$this->container->getCards();
         $i=0;
-        foreach($cardsArray as $card){
+        foreach($cards as $card){
             if($card->childList){
-                $this->setRelationship($card, $i, $cardsArray);
+                $this->setRelationship($card, $i, $cards);
             }
             $i++;
         }

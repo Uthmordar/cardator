@@ -17,6 +17,10 @@ class CardContainer extends \SplObjectStorage implements iCardatorContainer{
      * @return \Uthmordar\Cardator\Card\CardContainer
      */
     public function getCards(){
-        return $this;
+        $cards=[];
+        foreach($this as $card){
+            $cards[]=$card;
+        }
+        return $cards;
     }
 }
