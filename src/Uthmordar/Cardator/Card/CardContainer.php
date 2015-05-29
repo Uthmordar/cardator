@@ -2,7 +2,7 @@
 
 namespace Uthmordar\Cardator\Card;
 
-class CardContainer extends \SplObjectStorage implements iCardatorContainer{
+abstract class CardContainer extends \SplObjectStorage implements iCardatorContainer{
     /**
      * 
      * @param \Uthmordar\Cardator\Card\lib\iCard $card
@@ -17,10 +17,6 @@ class CardContainer extends \SplObjectStorage implements iCardatorContainer{
      * @return \Uthmordar\Cardator\Card\CardContainer
      */
     public function getCards(){
-        $cards=[];
-        foreach($this as $card){
-            $cards[]=$card;
-        }
-        return $cards;
+        return $this;
     }
 }

@@ -17,6 +17,22 @@ class Cardator{
     }
     
     /**
+     * 
+     * @param type cardType or cardType array $cardType
+     */
+    public function addExcept($cardType){
+        $this->container->addExcept($cardType);
+    }
+    
+    /**
+     * 
+     * @param type cardType or cardType array $cardType
+     */
+    public function addOnly($cardType){
+        $this->container->addOnly($cardType);
+    }
+    
+    /**
      * set output format: true => json, false => array of hydrated classes
      * @param \Uthmordar\Cardator\Boolean $val
      */
@@ -70,11 +86,13 @@ class Cardator{
      */
     private function setCardFromMD($scope, $url){
         $scope->each(function($node) use($url){
-            $type=$this->getCardTypeFromParser($node);
             try{
+                $type=$this->getCardTypeFromParser($node);
                 $card=$this->createCard($type);
             }catch(\RuntimeException $e){
                 $card=$this->createCard('Thing');
+            }catch(\Exception $e){
+                return false;
             }
             $card->child=count($node->filter('[itemscope]'))-1;
             $card->url=$url;
@@ -104,7 +122,7 @@ class Cardator{
      * check if card has registered relationship
      */
     private function checkRelationship(){
-        $cards=$this->container->getCards();
+        $cards=$this->container->getNonFilterCards();
         $i=0;
         foreach($cards as $card){
             if($card->childList){
@@ -121,7 +139,7 @@ class Cardator{
      * @param type $cards
      */
     private function setRelationship(Card\lib\iCard $card, $i, $cards){
-        $j=0;
+        $j=1;
         foreach($card->childList as $prop){
             $card->$prop=$cards[$i+$j];
             $j=$j+$cards[$i+$j]->child;
@@ -137,5 +155,21 @@ class Cardator{
         $typeUrl=($node->attr('itemtype'))? $node->attr('itemtype') : 'Thing';
         $typeSplit=explode('/', $typeUrl);
         return array_pop($typeSplit);
+    }
+    
+    /**
+     * 
+     * @param type $name
+     * @param \Closure $closure
+     */
+    public function addPostProcessTreatment($name, \Closure $closure){
+        $this->container->addPostProcessTreatment($name, $closure);
+    }
+    
+    /**
+     * 
+     */
+    public function doPostProcess(){
+        $this->container->doPostProcess();
     }
 }

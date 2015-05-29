@@ -2,7 +2,7 @@
 
 use Uthmordar\Cardator\Cardator;
 use Uthmordar\Cardator\Card\CardGenerator;
-use Uthmordar\Cardator\Card\CardContainer;
+use Uthmordar\Cardator\Card\CardProcessor;
 use Uthmordar\Cardator\Parser\Parser;
 
 
@@ -11,7 +11,7 @@ class CardatorTest extends \PHPUnit_Framework_TestCase{
     private $cardator;
     
     public function setUp(){
-        $this->cardator=new Cardator(new CardGenerator, new CardContainer, new Parser);
+        $this->cardator=new Cardator(new CardGenerator, new CardProcessor, new Parser);
     }
 
     public function tearDown() {

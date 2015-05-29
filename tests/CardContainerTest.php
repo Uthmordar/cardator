@@ -1,6 +1,6 @@
 <?php
 
-use Uthmordar\Cardator\Card\CardContainer;
+use Uthmordar\Cardator\Card\CardProcessor;
 
 class CardContainerTest extends \PHPUnit_Framework_TestCase{
     
@@ -9,7 +9,7 @@ class CardContainerTest extends \PHPUnit_Framework_TestCase{
     private $mock1;
     
     public function setUp(){
-        $this->container=new CardContainer;
+        $this->container=new CardProcessor;
         $this->mock=$this->getMock('Uthmordar\Cardator\Card\lib\Thing', array(), array());
         $this->mock1=$this->getMock('Uthmordar\Cardator\Card\lib\Thing', array(), array());
     }
@@ -32,7 +32,7 @@ class CardContainerTest extends \PHPUnit_Framework_TestCase{
      * @depends testAddCard
      */
     public function testGetCards($container){
-        $cards=$container->getCards();
+        $cards=$container->getNonFilterCards();
         foreach($cards as $card){
             $this->assertTrue($card instanceof \Uthmordar\Cardator\Card\lib\iCard);
         }
