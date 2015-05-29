@@ -2,7 +2,11 @@
 
 ## Cardator Package
 
-Allows web page parsing, gather microdata and return card object depending on the web semantic
+Allows web page parsing and gather microdata.
+
+Filtering\hook possibilities at card instanciation or in PostProcessing.
+
+Output: card collection as hydratated object or json encoding.
 
 ```
 require_once "vendor/autoload.php";
@@ -14,7 +18,11 @@ use Uthmordar\Cardator\Parser\Parser;
 
 try{
     $cardator=new Cardator(new CardGenerator, new CardProcessor, new Parser);
-    //$cardator->addOnly('Article');
+
+    /* give only Article type card in output */
+    $cardator->addOnly('Article');
+
+    /* choose url to parse */
     $crawl=$cardator->crawl('cardator/test.html');
     
     $cardator->addPostProcessTreatment('boum', function($name, $value){return 'toto';});
@@ -26,11 +34,9 @@ try{
     /* get classes */
     $cards=$cardator->getCards();
     foreach($cards as $c){
-        var_dump($c);
         // do something with cards
     }
 }catch(\RuntimeException $e){
-    var_dump($e->getMessage());
     // do something with error 
 }
 

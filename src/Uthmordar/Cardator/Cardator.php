@@ -103,10 +103,12 @@ class Cardator{
     private function setGenericCard($url){
         $card=$this->createCard('Thing');
         $card->url=$url;
-        /*
-         * get some standard informations here
-         * 
-         */
+        $this->parser->getCrawler()->filter('h1')->each(function($node) use($card){
+           $card->name=trim($node->text()); 
+        });
+        $this->parser->getCrawler()->filter('title')->each(function($node) use($card){
+           $card->description=trim($node->text()); 
+        });
         $this->saveCard($card);
     }
     
