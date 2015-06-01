@@ -11,7 +11,9 @@ abstract class FilterCard{
         'datePublished'=>'filterDateTime',
         'birthDate'=>'filterDateTime',
         'deathDate'=>'filterDateTime',
-        'foundingDate'=>'filterDateTime'];
+        'foundingDate'=>'filterDateTime',
+        'endDate'=>'filterDateTime',
+        'startDate'=>'filterDateTime'];
   
     /**
      * 

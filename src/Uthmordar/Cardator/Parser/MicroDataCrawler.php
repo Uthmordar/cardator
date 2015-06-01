@@ -122,7 +122,7 @@ class MicroDataCrawler{
      * 
      * @param Crawler $node
      * @param iCard $card
-     * @param type $property
+     * @param string $property
      * @return boolean
      */
     private static function nestedScope(Crawler $node, iCard $card, $property, $isItemref){
@@ -150,6 +150,12 @@ class MicroDataCrawler{
         }
     }
     
+    /**
+     * 
+     * @param iCard $card
+     * @param string $property
+     * @return boolean
+     */
     private static function updateChildList(iCard $card, $property){
         $data=$card->childList;
         array_push($data, $property);
@@ -161,7 +167,7 @@ class MicroDataCrawler{
      * determine card type by itemtype or set default Thing type
      * 
      * @param \Symfony\Component\DomCrawler\Crawler $node
-     * @return type
+     * @return string
      */
     public static function getCardTypeFromCrawler(\Symfony\Component\DomCrawler\Crawler $node){
         $typeUrl=($node->attr('itemtype'))? $node->attr('itemtype') : 'Thing';
