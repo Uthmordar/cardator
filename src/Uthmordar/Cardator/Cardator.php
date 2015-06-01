@@ -82,7 +82,7 @@ class Cardator{
     private function setCardFromMD($scope, $url){
         $scope->each(function($node) use($url){
             try{
-                $type=$this->getCardTypeFromParser($node);
+                $type=MicroDataCrawler::getCardTypeFromCrawler($node);
                 $card=$this->createCard($type);
             }catch(\RuntimeException $e){
                 $card=$this->createCard('Thing');
@@ -144,18 +144,6 @@ class Cardator{
             $card->$prop=$cards[$i+$j];
             $j=$j+$cards[$i+$j]->child;
         }
-    }
-    
-    /**
-     * determine card type by itemtype or set default Thing type
-     * 
-     * @param \Symfony\Component\DomCrawler\Crawler $node
-     * @return type
-     */
-    private function getCardTypeFromParser(\Symfony\Component\DomCrawler\Crawler $node){
-        $typeUrl=($node->attr('itemtype'))? $node->attr('itemtype') : 'Thing';
-        $typeSplit=explode('/', $typeUrl);
-        return array_pop($typeSplit);
     }
     
     /**

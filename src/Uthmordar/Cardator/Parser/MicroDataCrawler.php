@@ -4,6 +4,7 @@ namespace Uthmordar\Cardator\Parser;
 
 use \Symfony\Component\DomCrawler\Crawler;
 use \Uthmordar\Cardator\Card\lib\iCard;
+use \Uthmordar\Cardator\Card\CardGenerator;
 
 class MicroDataCrawler{
     /**
@@ -12,11 +13,11 @@ class MicroDataCrawler{
      * @param Crawler $node
      * @param iCard $card
      */
-    public static function getScopeContent(Crawler $node, iCard $card){
+    public static function getScopeContent(Crawler $node, iCard $card, $isItemref=false){
         $content=$node->html();
         $cr=new Crawler($content);
-        $cr->filter('[itemprop]')->each(function($node) use($card){
-            self::setCardProperty($node, $card);
+        $cr->filter('[itemprop]')->each(function($node) use($card, $isItemref){
+            self::setCardProperty($node, $card, $isItemref);
         });
     }
     
@@ -27,10 +28,10 @@ class MicroDataCrawler{
      * @param iCard $card
      * @return boolean
      */
-    private static function setCardProperty(Crawler $node, iCard $card){
+    private static function setCardProperty(Crawler $node, iCard $card, $isItemref=false){
         $property=$node->attr('itemprop');
         if($node->parents()->attr('itemscope')!==null){return false;}
-        if(self::nestedScope($node, $card, $property)){return true;}
+        if(self::nestedScope($node, $card, $property, $isItemref)){return true;}
         if(self::manageImgProperty($node, $property, $card)){return true;}
         if(self::manageLinkProperty($node, $property, $card)){return true;}
         if(self::manageNumericProperty($node, $property, $card)){return true;}
@@ -109,7 +110,7 @@ class MicroDataCrawler{
             $ids=explode(' ', $node->attr('itemref'));
             foreach($ids as $id){
                 $crawler->filter('#'.trim($id))->each(function($node) use($card){
-                   self::getScopeContent($node, $card); 
+                   self::getScopeContent($node, $card, true); 
                 });
             }
             return true;
@@ -124,12 +125,47 @@ class MicroDataCrawler{
      * @param type $property
      * @return boolean
      */
-    private static function nestedScope(Crawler $node, iCard $card, $property){
+    private static function nestedScope(Crawler $node, iCard $card, $property, $isItemref){
         if($node->attr('itemscope')!==null){
-            $data=$card->childList;
-            array_push($data, $property);
-            $card->childList=$data;
-            return true;
+            if($isItemref){
+                $generator=new CardGenerator();
+                try{
+                    $type=self::getCardTypeFromCrawler($node);
+                    $child=$generator->createCard($type);
+                }catch(\RuntimeException $e){
+                    $child=$generator->createCard('Thing');
+                }
+                
+                $child->child=count($node->filter('[itemscope]'))-1;
+                $child->url=$card->url;
+                
+                self::manageItemIdProperty($node, $child);
+                self::getScopeContent($node, $child);
+                
+                $card->$property=$child;
+                return true;
+            }else{
+                return self::updateChildList($card, $property);
+            }
         }
+    }
+    
+    private static function updateChildList(iCard $card, $property){
+        $data=$card->childList;
+        array_push($data, $property);
+        $card->childList=$data;
+        return true;
+    }
+    
+    /**
+     * determine card type by itemtype or set default Thing type
+     * 
+     * @param \Symfony\Component\DomCrawler\Crawler $node
+     * @return type
+     */
+    public static function getCardTypeFromCrawler(\Symfony\Component\DomCrawler\Crawler $node){
+        $typeUrl=($node->attr('itemtype'))? $node->attr('itemtype') : 'Thing';
+        $typeSplit=explode('/', $typeUrl);
+        return array_pop($typeSplit);
     }
 }

@@ -5,6 +5,7 @@ namespace Uthmordar\Cardator\Card\lib;
 class Thing extends FilterCard implements iCard{
     protected $child=0;
     protected $childList=[];
+    protected $refId;
     protected $parents;
     protected $additionalType;
     protected $alternateName;
