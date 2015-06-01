@@ -37,7 +37,7 @@ class CardProcessor extends CardContainer{
     
     /**
      * 
-     * @param cardQualifiedName or cardQualifiedName array $cardType
+     * @param cardQualifiedName or cardQualifiedName array $cardType if an array is provided then this array erase previous only array
      */
     public function addOnly($cardType){
         if(is_array($cardType)){
@@ -49,7 +49,7 @@ class CardProcessor extends CardContainer{
     
     /**
      * 
-     * @param cardQualifiedName or cardQualifiedName array $cardType
+     * @param cardQualifiedName or cardQualifiedName array $cardType if an array is provided then this array erase previous exception array
      */
     public function addExcept($cardType){
         if(is_array($cardType)){
@@ -64,10 +64,14 @@ class CardProcessor extends CardContainer{
      * @param cardQualifiedName $type
      */
     private function isAllowedType($type){
-        if((empty($this->only) && empty($this->except)) || (in_array($type, $this->only) && !in_array($type, $this->except))){
+        if(empty($this->only) && empty($this->except)){
             return $type;
+        }else if(in_array($type, $this->except)){
+            return false;
+        }else if(in_array($type, $this->only)){
+            return false;
         }
-        return false;
+        return $type;
     }
     
     /**

@@ -17,7 +17,7 @@ class CardatorTest extends \PHPUnit_Framework_TestCase{
     public function tearDown() {
         parent::tearDown();
     }
-     
+    
     /**
      * @test try to instantiate an unkown type of card
      * @expectedException RuntimeException

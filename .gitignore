@@ -1,6 +1,7 @@
 /vendor
 /cover
 /nbproject
+/doc
 composer.phar
 composer.lock
 .DS_Store
