@@ -10,10 +10,12 @@ class CardTest extends \PHPUnit_Framework_TestCase{
     
     private $cardator;
     private $card;
+    private $article;
     
     public function setUp(){
         $this->cardator=new Cardator(new CardGenerator, new CardProcessor, new Parser);
         $this->card=$this->cardator->createCard('Thing');
+        $this->article=$this->cardator->createCard('Article');
     }
 
     public function tearDown() {
@@ -60,5 +62,19 @@ class CardTest extends \PHPUnit_Framework_TestCase{
      */
     public function testCallifiedName(){
         $this->assertEquals('Thing', $this->card->getQualifiedName());
+    }
+    
+    /**
+     * test get card parents
+     */
+    public function testGetParents(){
+        $this->assertEquals(['Thing', 'CreativeWork'], $this->article->getParents());
+    }
+    
+    /**
+     * test get only direct parent name
+     */
+    public function testGetDirectParent(){
+        $this->assertEquals('CreativeWork', $this->article->getDirectParent());
     }
 }
