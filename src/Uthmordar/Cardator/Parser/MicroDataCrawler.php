@@ -47,10 +47,17 @@ class MicroDataCrawler{
      * @return boolean
      */
     private static function manageImgProperty(Crawler $node, $prop, iCard $card){
+        $src=null;
         if($node->attr('src')){
-            $card->$prop=$node->attr('src');
-            return true;
+            $src=$node->attr('src');
         }
+        if($node->attr('content')){
+            $src=$node->attr('content');
+        }
+        if($src!=null){
+            $card->$prop=($src[0]=='/')? $card->url . $src : $src;
+            return true;
+        }       
     }
     
     /**
@@ -62,7 +69,7 @@ class MicroDataCrawler{
      */
     private static function manageNumericProperty(Crawler $node, $prop, iCard $card){
         if($node->attr('value')){
-            $card->$prop=$node->attr('value');
+            $card->$prop=(float) $node->attr('value');
             return true;
         }
     }
@@ -77,7 +84,7 @@ class MicroDataCrawler{
      */
     private static function manageLinkProperty(Crawler $node, $prop, iCard $card){
         if($node->attr('href')){
-            $card->$prop=$node->attr('href');
+            $card->$prop=($node->attr('href')[0]=='/')? $card->url . $node->attr('href') : $node->attr('href');
             return true;
         }
     }

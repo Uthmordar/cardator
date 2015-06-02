@@ -9,9 +9,11 @@ use Uthmordar\Cardator\Parser\Parser;
 class CardatorTest extends \PHPUnit_Framework_TestCase{
     
     private $cardator;
+    private $cardProcessor;
     
     public function setUp(){
-        $this->cardator=new Cardator(new CardGenerator, new CardProcessor, new Parser);
+        $this->cardProcessor=$this->getMock('Uthmordar\Cardator\Card\CardProcessor', [], []);
+        $this->cardator=new Cardator(new CardGenerator, $this->cardProcessor, new Parser);
     }
 
     public function tearDown() {
@@ -48,12 +50,55 @@ class CardatorTest extends \PHPUnit_Framework_TestCase{
     
     /**
      * test getting card from cardator
-     * @depends testAddCard
      */
-    public function testGetCards($cardator){
-        $cards=$cardator->getCards();
-        foreach($cards as $card){
-            $this->assertTrue($card instanceof \Uthmordar\Cardator\Card\lib\iCard);
-        }
+    public function testGetCards(){
+        $this->cardProcessor->expects($this->exactly(1))->method('getCards');
+        $this->cardator->getCards();
+    }
+    
+    /**
+     * test dependancy addOnly Processor from cardator
+     */
+    public function testAddOnly(){
+        $this->cardProcessor->expects($this->exactly(1))->method('addOnly');
+        $this->cardator->addOnly('Thing');
+    }
+    
+    /**
+     * test dependancy addExcept Processor from cardator
+     */
+    public function testAddExcept(){
+        $this->cardProcessor->expects($this->exactly(1))->method('addExcept');
+        $this->cardator->addExcept('Thing');
+    }
+    
+    /**
+     * test dependancy doPostProcess Processor from cardator
+     */
+    public function testDoPostProcess(){
+        $this->cardProcessor->expects($this->exactly(1))->method('doPostProcess');
+        $this->cardator->doPostProcess();
+    }
+    
+    /**
+     * test dependancy addPostProcessTreatment Processor from cardator
+     */
+    public function testAddPostProcessTreatment(){
+        $this->cardProcessor->expects($this->exactly(1))->method('addPostProcessTreatment');
+        $this->cardator->addPostProcessTreatment('test', function(){});
+    }
+    
+    public function testCrawl(){
+        $cardator=new Cardator(new CardGenerator, new CardProcessor, new Parser);
+        $cardator->crawl('http://test.tanguygodin.fr/test.html');
+        $cards=$cardator->getCards(true);
+        $this->assertTrue(is_string($cards));
+    }
+    
+    public function testCrawlNoMicrodata(){
+        $cardator=new Cardator(new CardGenerator, new CardProcessor, new Parser);
+        $cardator->crawl('http://php.net');
+        $cards=$cardator->getCards(true);
+        $this->assertTrue(is_string($cards));
     }
 }

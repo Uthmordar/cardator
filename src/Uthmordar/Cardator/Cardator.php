@@ -65,7 +65,7 @@ class Cardator{
     public function crawl($url){
         $this->parser->setCrawler($url);
         $scope=$this->parser->getCrawler()->filter('[itemscope]');
-        if($scope){
+        if(count($scope)){
             $this->setCardFromMD($scope, $url);
         }else{
             $this->setGenericCard($url);
