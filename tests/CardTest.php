@@ -49,9 +49,9 @@ class CardTest extends \PHPUnit_Framework_TestCase{
     /**
      * test inexistant property or params
      * @expectedException RuntimeException
+     * @expectedExceptionMessage Undefined property unknown for Thing
      */
     public function testGetUnknownParams(){
-        $this->setExpectedException('RuntimeException', "Undefined property unknown for Thing");
         $this->card->unknown;
     }
     

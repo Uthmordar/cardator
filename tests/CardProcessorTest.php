@@ -97,4 +97,43 @@ class CardProcessorTest extends \PHPUnit_Framework_TestCase{
         $cards=$this->container->getCards();
         $this->assertEquals(0, count($cards));
     }
+    
+    /**
+     * test add filter only take closure as 2nd params
+     * @expectedException PHPUnit_Framework_Error
+     */
+    public function testAddPostProcessTreatment(){
+        $this->container->addPostProcessTreatment('filter_test', 'test');
+        $this->assertTrue($this->container->addPostProcessTreatment('filter_test', function(){}));
+    }
+    
+    public function testDoPostProcess(){
+        $card=new Uthmordar\Cardator\Card\lib\Thing;
+        $card->testProp='toto';
+        $this->container->addCard($card);
+        $this->container->addPostProcessTreatment('testProp', function($name, $value){return 'titi';});
+        $this->container->doPostProcess();
+        $this->assertEquals('titi', $card->testProp);
+    }
+    
+    /*
+     * @expectedException RuntimeException
+     */
+    public function testApplyFilterOnProperty(){
+        $card=new Uthmordar\Cardator\Card\lib\Thing;
+        $this->container->applyFilterOnProperty($card, 'test_no_prop', function($name, $value){return 'titi';});
+    }
+    
+    /**
+     * test data conversion for card arrayfication
+     */
+    public function testCreateArrayCard(){
+        $card=new Uthmordar\Cardator\Card\lib\Thing;
+        $card->dateTest=new Datetime();
+        $card->cardTest=new Uthmordar\Cardator\Card\lib\Thing;
+        $card->test='test';
+        $array=$this->container->createArrayCard($card);
+        $this->assertEquals($array['test'], 'test');
+        $this->assertTrue(is_array($array['cardTest']));
+    }
 }

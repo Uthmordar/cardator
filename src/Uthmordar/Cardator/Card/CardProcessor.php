@@ -82,6 +82,7 @@ class CardProcessor extends CardContainer{
      */
     public function addPostProcessTreatment($name, \Closure $filter){
         $this->filter[$name]=$filter;
+        return $this;
     }
     
     /**
@@ -129,7 +130,7 @@ class CardProcessor extends CardContainer{
      * @param \Uthmordar\Cardator\Card\lib\iCard $card
      * @return array
      */
-    private function createArrayCard(lib\iCard $card){
+    public function createArrayCard(lib\iCard $card){
         $array=[
             'type'=>$card->type,
             'class'=>$card->getQualifiedName()

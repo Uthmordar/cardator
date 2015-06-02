@@ -21,9 +21,9 @@ class CardatorTest extends \PHPUnit_Framework_TestCase{
     /**
      * @test try to instantiate an unkown type of card
      * @expectedException RuntimeException
+     * @expectedExceptionMessage Thing1 type card not found.
      */
     public function testUnknowType(){
-        $this->setExpectedException('RuntimeException', 'Thing1 type card not found.');
         $this->cardator->createCard('Thing1');
     }
     
