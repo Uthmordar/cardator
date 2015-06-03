@@ -16,6 +16,7 @@ abstract class FilterCard{
         'startDate'=>'filterDateTime'];
   
     /**
+     * search filter closure or function bind to a given property && apply it
      * 
      * @param string $name property 
      * @param string/DateTime $value property value

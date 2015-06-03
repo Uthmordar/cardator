@@ -48,6 +48,7 @@ class CardProcessorTest extends \PHPUnit_Framework_TestCase{
     public function testGetCards($container){
         $cards=$container->getCards();
         $this->assertTrue($cards instanceof \Uthmordar\Cardator\Card\CardCollection);
+        $this->assertTrue($cards->getCards() instanceof \Uthmordar\Cardator\Card\CardCollection);
     }
     
     /**

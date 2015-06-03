@@ -2,6 +2,6 @@
 
 namespace Uthmordar\Cardator\Card;
 
-class CardCollection extends \SplObjectStorage{
+class CardCollection extends CardContainer{
     
 }

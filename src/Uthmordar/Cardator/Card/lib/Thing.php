@@ -2,6 +2,10 @@
 
 namespace Uthmordar\Cardator\Card\lib;
 
+/**
+ * default car class
+ * regroup properties and access to them with __get, __set and __call
+ */
 class Thing extends FilterCard implements iCard{
     protected $child=0;
     protected $childList=[];
@@ -41,6 +45,7 @@ class Thing extends FilterCard implements iCard{
     }
     
     /**
+     * set card property or register it in params array if it doesn't exist
      * 
      * @param string $name
      * @param string || iCard || DateTime $value
@@ -58,9 +63,10 @@ class Thing extends FilterCard implements iCard{
     }
     
     /**
+     * get card property if exists or get from params 
      * 
      * @param string $name
-     * @return type
+     * @return string || iCard 
      * @throws \RuntimeException
      */
     protected function getCardProperty($name){
@@ -76,7 +82,8 @@ class Thing extends FilterCard implements iCard{
       
     /**
      * get card type
-     * @return type
+     * 
+     * @return string
      */
     public function getQualifiedName(){
         $reflect=new \ReflectionClass($this);
@@ -84,16 +91,18 @@ class Thing extends FilterCard implements iCard{
     }
     
     /**
+     * get an array of card parents
      * 
-     * @return type
+     * @return array
      */
     public function getParents(){
         return explode('\\',$this->parents);
     }
     
     /**
+     * get direct parent name
      * 
-     * @return type
+     * @return string
      */
     public function getDirectParent(){
         $parent=get_parent_class($this);

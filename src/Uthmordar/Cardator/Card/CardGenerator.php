@@ -2,6 +2,9 @@
 
 namespace Uthmordar\Cardator\Card;
 
+/**
+ * Allows instance card lib classes by class short name
+ */
 class CardGenerator implements iCardatorGenerator{
     private $card;
     private $libPath="\Uthmordar\Cardator\Card\lib\\";

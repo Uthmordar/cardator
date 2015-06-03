@@ -2,6 +2,9 @@
 
 namespace Uthmordar\Cardator\Card;
 
+/**
+ * regroup all card transform operations, such as filter, output formatting or post processing
+ */
 class CardProcessor extends CardContainer{
     protected $filter=[];
     private $except=[];

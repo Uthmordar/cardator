@@ -4,6 +4,9 @@ namespace Uthmordar\Cardator;
 
 use Uthmordar\Cardator\Parser\MicroDataCrawler;
 
+/**
+ * Coordinate all classes for the vendor and allows simple use of it
+ */
 class Cardator{
     private $generator;
     private $container;
@@ -16,6 +19,7 @@ class Cardator{
     }
     
     /**
+     * given card Type will not be return in Cardator result
      * 
      * @param string cardType or cardType array $cardType
      */
@@ -24,6 +28,7 @@ class Cardator{
     }
     
     /**
+     * if only is use, only these card types will be return in Cardator result
      * 
      * @param string cardType or cardType array $cardType
      */
@@ -32,6 +37,9 @@ class Cardator{
     }
         
     /**
+     * get card from container, filter with only and except
+     * 
+     * @param boolean $json default=false, if set to true then json encode output else CardCollection
      * @return splObject containing all save cards
      */
     public function getCards($json=false){
@@ -42,7 +50,7 @@ class Cardator{
      * get new card instance by type
      * 
      * @param string $type card qualified name
-     * @return type
+     * @return iCard
      */
     public function createCard($type){
         return $this->generator->createCard($type);
@@ -74,7 +82,7 @@ class Cardator{
     }
     
     /**
-     * create card from microdata
+     * create card from microdata && save it in cardContainer
      * 
      * @param Crawler $scope
      * @param string $url
@@ -145,9 +153,10 @@ class Cardator{
     }
     
     /**
+     * register post process filtering on given properties
      * 
      * @param string $name card property
-     * @param \Closure $closure
+     * @param \Closure $closure filter to apply
      */
     public function addPostProcessTreatment($name, \Closure $closure){
         $this->container->addPostProcessTreatment($name, $closure);
