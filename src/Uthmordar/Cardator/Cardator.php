@@ -86,8 +86,6 @@ class Cardator{
                 $card=$this->createCard($type);
             }catch(\RuntimeException $e){
                 $card=$this->createCard('Thing');
-            }catch(\Exception $e){
-                return false;
             }
             $card->child=count($node->filter('[itemscope]'))-1;
             $card->url=$url;
@@ -108,7 +106,7 @@ class Cardator{
     private function setGenericCard($url){
         $card=$this->createCard('Thing');
         $card->url=$url;
-        $this->parser->getCrawler()->filter('h1')->each(function($node) use($card){
+        $this->parser->getCrawler()->filter('h2')->each(function($node) use($card){
            $card->name=trim($node->text()); 
         });
         $this->parser->getCrawler()->filter('title')->each(function($node) use($card){
