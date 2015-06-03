@@ -16,6 +16,5 @@
         "psr-0": {
             "Uthmordar\\Cardator": "src/"
         }
-    },
-    "minimum-stability": "dev"
+    }
 }
