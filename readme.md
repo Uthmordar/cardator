@@ -8,7 +8,9 @@ Filtering\hook possibilities at card instanciation or in PostProcessing.
 
 Output: card collection as hydratated object or json encoded string.
 
-### Exemple:
+### Base Utilisation:
+
+**require a composer dump-autoload --optimize** 
 
 ```
 require_once "vendor/autoload.php";
