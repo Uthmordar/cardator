@@ -2,6 +2,8 @@
 
 ## Cardator Package
 
+v 1.0.0
+
 Allows web page parsing and gather microdata.
 
 Filtering\hook possibilities at card instanciation or in PostProcessing.
