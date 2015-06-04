@@ -66,4 +66,15 @@ abstract class FilterCard{
     protected function addFilter($name, \Closure $filter){
         $this->filter[$name]=$filter;
     }
+    
+    public function __sleep(){
+        $this->filter=[];
+        $keep=['type', 'child', 'childList', 'parents', 'params', 'properties'];
+        foreach($this->properties as $p){
+            if(isset($this->$p)){
+                $keep[]=$p;
+            }
+        }
+        return $keep;
+    }
 }
