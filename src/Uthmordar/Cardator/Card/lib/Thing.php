@@ -54,11 +54,12 @@ class Thing extends FilterCard implements iCard{
     protected function setCardProperty($name, $value){
         $valF=$this->filterValue($name, $value);
         $val=($valF)? $valF : $value;
+        $cleanVal=(is_string($val))? htmlentities(utf8_decode($val)) : $val;
         if(property_exists($this, $name)){
-            $this->$name=$val;
+            $this->$name=$cleanVal;
             return $this;
         }
-        $this->params[$name]=$val;
+        $this->params[$name]=$cleanVal;
         return $this;
     }
     

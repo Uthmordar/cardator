@@ -9,6 +9,7 @@ abstract class FilterCard{
         'dateCreated'=>'filterDateTime',
         'dateEdited'=>'filterDateTime',
         'datePublished'=>'filterDateTime',
+        'dateModified'=>'filterDateTime',
         'birthDate'=>'filterDateTime',
         'deathDate'=>'filterDateTime',
         'foundingDate'=>'filterDateTime',
@@ -52,11 +53,15 @@ abstract class FilterCard{
      * @return \DateTime
      */
     protected function filterDateTime($name, $value){
-        $val=new \DateTime($value);
+        try{
+            $val=new \DateTime($value);
+        }catch(\Exception $e){
+            $val=$value;
+        }
         $this->properties[]=$name;
         return $val;
     }
-    
+     
     /**
      * add custom filter
      * 
