@@ -66,9 +66,9 @@ abstract class FilterCard{
      * add custom filter
      * 
      * @param string $name property
-     * @param \Closure $filter ($name, $value)
+     * @param string or \Closure $filter ($name, $value)
      */
-    protected function addFilter($name, \Closure $filter){
+    protected function addFilter($name, $filter){
         $this->filter[$name]=$filter;
     }
     

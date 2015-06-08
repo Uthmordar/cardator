@@ -21,6 +21,15 @@ class FilterCardTest extends \PHPUnit_Framework_TestCase{
     }
     
     /**
+     * test filter return if no valid DateTime given
+     */
+    public function testFilterDateTime(){
+        $this->card->dateCreated='10-12-2010 at 12pm';
+        $this->assertFalse($this->card->dateCreated instanceof \DateTime);
+        $this->assertEquals($this->card->dateCreated, '10-12-2010 at 12pm');
+    }
+    
+    /**
      * test filter no register for child
      */
     public function testNoRegisterForChild(){
