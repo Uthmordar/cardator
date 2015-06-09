@@ -109,14 +109,34 @@ class CardProcessor extends CardContainer{
      */
     public function applyFilterOnProperty(lib\iCard $card, $prop, \Closure $closure){
         try{
-            $card->$prop=$closure($prop, $card->$prop);
+            $card->$prop(['filtered'=>$this->getFilterResultOnProperty($card, $prop, $closure), 'replace'=>true]);
         }catch(\RuntimeException $e){
             return false;
         }
     }
     
     /**
+     * get post filter properties value or array of post filter properties value
      * 
+     * @param \Uthmordar\Cardator\Card\lib\iCard $card
+     * @param string or array $prop
+     * @param Closure $closure
+     * @return string or array
+     */
+    public function getFilterResultOnProperty(lib\iCard $card, $prop, \Closure $closure){
+        if(is_array($card->$prop)){
+            $r=[];
+            foreach($card->$prop as $k=>$p){
+                $r[$k]=$closure($prop, $p);
+            }
+        }else{
+            $r=$closure($prop, $card->$prop);
+        }
+        return $r;
+    }
+    
+    /**
+     * return attach card as json
      * @return json
      */
     private function formatCollectionToJson(){
@@ -129,6 +149,7 @@ class CardProcessor extends CardContainer{
     }
     
     /**
+     * create an array from a Card object
      * 
      * @param \Uthmordar\Cardator\Card\lib\iCard $card
      * @return array

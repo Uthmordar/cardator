@@ -22,6 +22,7 @@ class Thing extends FilterCard implements iCard{
     protected $url;
     protected $properties=[];
     protected $type="http://schema.org/Thing";
+    protected $onlyReplace=['child', 'childList', 'parents'];
     
     protected $params=[];
     
@@ -39,13 +40,34 @@ class Thing extends FilterCard implements iCard{
     
     public function __call($name, $arguments){
         if(!empty($arguments)){
+            if(!empty($arguments[0]['replace']) && !empty($arguments[0]['replace'])==true){
+                return $this->replaceCardProperty($name, $arguments[0]['filtered']);
+            }
             return $this->setCardProperty($name, $arguments[0]);
         }
         return $this->getCardProperty($name);
     }
+        
+    /**
+     * replace card property 
+     * 
+     * @param type $name property name
+     * @param type $value 
+     * @return \Uthmordar\Cardator\Card\lib\Thing
+     */
+    protected function replaceCardProperty($name, $value){
+        $cleanVal=(is_string($value))? htmlentities(utf8_decode($value)) : $value;
+        if(property_exists($this, $name)){
+            $this->$name=$cleanVal;
+            return $this;
+        }
+        
+        $this->params[$name]=$cleanVal;
+        return $this;
+    }
     
     /**
-     * set card property or register it in params array if it doesn't exist
+     * set card property or register it in params array
      * 
      * @param string $name
      * @param string || iCard || DateTime $value
@@ -56,25 +78,36 @@ class Thing extends FilterCard implements iCard{
         $val=($valF)? $valF : $value;
         $cleanVal=(is_string($val))? htmlentities(utf8_decode($val)) : $val;
         if(property_exists($this, $name)){
-            if(in_array($name, ['child', 'childList', 'parents'])){
+            if(in_array($name, $this->onlyReplace)){
                 $this->$name=$cleanVal;
             }else if(!is_array($this->$name) && !empty($this->$name)){
                 $this->$name=[$this->$name, $cleanVal];
             }else if(is_array($this->$name)){
-                $this->$name=array_push($this->$name, $cleanVal);
+                array_push($this->$name, $cleanVal);
             }else{
                 $this->$name=$cleanVal;
             }
             return $this;
         }
-        if(!empty($this->params[$name]) && !is_array($this->params[$name])){
-            $this->params[$name]=[$this->params[$name], $cleanVal];
-        }else if(!empty($this->params[$name]) && is_array($this->params[$name])){
-            $this->params[$name]=array_push($this->params[$name], $cleanVal);
-        }else{
-            $this->params[$name]=$cleanVal;
-        }
+        
+        $this->setCardParams($name, $cleanVal);
         return $this;
+    }
+    
+    /**
+     * set card property in params array
+     * 
+     * @param string $name
+     * @param string || iCard || DateTime $val
+     */
+    protected function setCardParams($name, $val){
+        if(!empty($this->params[$name]) && !is_array($this->params[$name])){
+            $this->params[$name]=[$this->params[$name], $val];
+        }else if(!empty($this->params[$name]) && is_array($this->params[$name])){
+            array_push($this->params[$name], $val);
+        }else{
+            $this->params[$name]=$val;
+        }
     }
     
     /**
