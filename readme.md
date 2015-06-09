@@ -59,7 +59,7 @@ try{
 This tool crawl webpages searching for [microdata](https://html.spec.whatwg.org/multipage/microdata.html) specifications.
 
 It will also tracks some special attributes and link them to given itemprop:
-  * dk-raw is an attribute you should use to give informations usable only by developers or robots such as timestamp instead of formatted date.
+  * dk-raw is an attribute you should use to give informations usable only by developers or robots such as datetime instead of human readable date.
 
 
 
