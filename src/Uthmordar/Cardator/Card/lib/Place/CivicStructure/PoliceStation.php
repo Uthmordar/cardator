@@ -3,7 +3,7 @@
 namespace Uthmordar\Cardator\Card\lib;
 
 class PoliceStation extends CivicStructure{
-    protected $parents="Thing\Place\CivicStructure::Thing\Organization\LocalBusiness";
+    protected $parents="Thing\Place\CivicStructure::Thing\Organization\LocalBusiness\EmergencyService";
     protected $currenciesAccepted;
     protected $openingHours;
     protected $parentOrganization;

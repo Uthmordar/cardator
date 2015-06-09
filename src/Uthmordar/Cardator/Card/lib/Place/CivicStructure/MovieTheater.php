@@ -3,10 +3,9 @@
 namespace Uthmordar\Cardator\Card\lib;
 
 class MovieTheater extends CivicStructure{
-    protected $parents="Thing\Place\CivicStructure::Thing\Organization\LocalBusiness";
+    protected $parents="Thing\Place\CivicStructure::Thing\Organization\LocalBusiness\EntertainmentBusiness";
     protected $screenCount;
     protected $currenciesAccepted;
-    protected $openingHours;
     protected $parentOrganization;
     protected $paymentAccepted;
     protected $priceRange;
