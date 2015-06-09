@@ -31,7 +31,9 @@ abstract class FilterCard{
             }
             return $this->$filter($name, $value);
         }
-        $this->properties[]=$name;
+        if(!in_array($name, $this->properties)){
+            $this->properties[]=$name;
+        }
         return false;
     }
     
