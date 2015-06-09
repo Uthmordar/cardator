@@ -56,10 +56,24 @@ class Thing extends FilterCard implements iCard{
         $val=($valF)? $valF : $value;
         $cleanVal=(is_string($val))? htmlentities(utf8_decode($val)) : $val;
         if(property_exists($this, $name)){
-            $this->$name=$cleanVal;
+            if(in_array($name, ['child', 'childList', 'parents'])){
+                $this->$name=$cleanVal;
+            }else if(!is_array($this->$name) && !empty($this->$name)){
+                $this->$name=[$this->$name, $cleanVal];
+            }else if(is_array($this->$name)){
+                $this->$name=array_push($this->$name, $cleanVal);
+            }else{
+                $this->$name=$cleanVal;
+            }
             return $this;
         }
-        $this->params[$name]=$cleanVal;
+        if(!empty($this->params[$name]) && !is_array($this->params[$name])){
+            $this->params[$name]=[$this->params[$name], $cleanVal];
+        }else if(!empty($this->params[$name]) && is_array($this->params[$name])){
+            $this->params[$name]=array_push($this->params[$name], $cleanVal);
+        }else{
+            $this->params[$name]=$cleanVal;
+        }
         return $this;
     }
     
