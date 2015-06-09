@@ -32,10 +32,26 @@ class MicroDataCrawler{
         $property=$node->attr('itemprop');
         if($node->parents()->attr('itemscope')!==null){return false;}
         if(self::nestedScope($node, $card, $property, $isItemref)){return true;}
+        if(self::manageRawProperty($node, $property, $card)){return true;}
         if(self::manageImgProperty($node, $property, $card)){return true;}
         if(self::manageLinkProperty($node, $property, $card)){return true;}
         if(self::manageNumericProperty($node, $property, $card)){return true;}
         $card->$property=trim($node->text());
+    }
+    
+    /**
+     * get value if node as dk-raw attr
+     * 
+     * @param Crawler $node
+     * @param type $prop
+     * @param iCard $card
+     * @return boolean
+     */
+    private static function manageRawProperty(Crawler $node, $prop, iCard $card){
+        if($node->attr('dk-raw')){
+            $card->$prop=$node->attr('dk-raw');
+            return true;
+        }
     }
     
     /**
@@ -55,9 +71,11 @@ class MicroDataCrawler{
             $src=$node->attr('content');
         }
         if($src!=null){
-            $card->$prop=($src[0]=='/')? $card->url . $src : $src;
+            $img=(!strpos($src, '/') && $card->url[strlen($card->url)-1]!=='/')? substr($card->url, 0, strrpos($card->url, '/')+1) . $src : $src;
+            $card->$prop=($img[0]=='/')? $card->url . $img : $img;
+            
             return true;
-        }       
+        }
     }
     
     /**
