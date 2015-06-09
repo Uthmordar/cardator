@@ -48,6 +48,12 @@ class CardTest extends \PHPUnit_Framework_TestCase{
         $this->assertEquals($this->card->notProperty(), "notProperty");
     }
     
+    public function testReplaceCardProperty(){
+        $this->card->name('name');
+        $this->card->replaceCardProperty('name', 'replacement');
+        $this->assertEquals($this->card->name, "replacement");
+    }
+    
     /**
      * test inexistant property or params
      * @expectedException RuntimeException

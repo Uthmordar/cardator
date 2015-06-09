@@ -88,7 +88,7 @@ class CardatorTest extends \PHPUnit_Framework_TestCase{
         $this->cardator->addPostProcessTreatment('test', function(){});
     }
     
-    public function testCrawl(){
+    /*public function testCrawl(){
         $cardator=new Cardator(new CardGenerator, new CardProcessor, new Parser);
         $cardator->crawl('http://test.tanguygodin.fr/test.html');
         $cards=$cardator->getCards(true);
@@ -100,5 +100,5 @@ class CardatorTest extends \PHPUnit_Framework_TestCase{
         $cardator->crawl('http://php.net');
         $cards=$cardator->getCards(true);
         $this->assertTrue(is_string($cards));
-    }
+    }*/
 }

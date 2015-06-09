@@ -117,6 +117,15 @@ class CardProcessorTest extends \PHPUnit_Framework_TestCase{
         $this->assertEquals('titi', $card->testProp);
     }
     
+    public function testDoPostProcessOnArray(){
+        $card=new Uthmordar\Cardator\Card\lib\Thing;
+        $card->testProp=['toto', 'toto2'];
+        $this->container->addCard($card);
+        $this->container->addPostProcessTreatment('testProp', function($name, $value){return 'titi';});
+        $this->container->doPostProcess();
+        $this->assertEquals(['titi', 'titi'], $card->testProp);
+    }
+    
     /*
      * @expectedException RuntimeException
      */
