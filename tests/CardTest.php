@@ -69,6 +69,8 @@ class CardTest extends \PHPUnit_Framework_TestCase{
      */
     public function testGetParents(){
         $this->assertEquals(['Thing', 'CreativeWork'], $this->article->getParents());
+        $this->article->parents='Thing\Test::Thing\TestBis';
+        $this->assertEquals([['Thing', 'Test'], ['Thing', 'TestBis']], $this->article->getParents());
     }
     
     /**

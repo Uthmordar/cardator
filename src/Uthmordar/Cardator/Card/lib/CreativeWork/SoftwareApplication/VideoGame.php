@@ -3,7 +3,7 @@
 namespace Uthmordar\Cardator\Card\lib;
 
 class VideoGame extends SoftwareApplication{
-    protected $parents="Thing\CreativeWork\SoftwareApplication::Game";
+    protected $parents="Thing\CreativeWork\SoftwareApplication::Thing\CreativeWork\Game";
     protected $actor;
     protected $characterAttribute;
     protected $cheatCode;

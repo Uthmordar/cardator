@@ -97,6 +97,13 @@ class Thing extends FilterCard implements iCard{
      * @return array
      */
     public function getParents(){
+        if(strpos($this->parents, '::')){
+            $r=[];
+            foreach(explode('::', $this->parents) as $p){
+                $r[]=explode('\\',$p);
+            }
+            return $r;
+        }
         return explode('\\',$this->parents);
     }
     

@@ -86,8 +86,13 @@ You could easily create Card object with:
     $cardType=$article->type;
 
     // Parents : will return an array ['Thing', 'CreativeWork']
-    // if more than one parent exist for a level : ['Thing', 'CreativeWork::SoftwareApplication']
+    // if more than one parent exist for an item : [['Thing', 'CreativeWork', 'SoftwareApplication'], ['Thing', 'CreativeWork', 'Game']]
     $cardParents=$article->getParents();
+    OR 
+    $cardParents=$article->parents;
+    // will return 'Thing\CreativeWork\SoftawareApplication::Thing\CreativeWork\Game'
+
+    // Return the direct parent Name
     $cardDirectParent=$article->getDirectparent();
 
 ```
