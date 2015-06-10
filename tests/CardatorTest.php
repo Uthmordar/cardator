@@ -5,15 +5,18 @@ use Uthmordar\Cardator\Card\CardGenerator;
 use Uthmordar\Cardator\Card\CardProcessor;
 use Uthmordar\Cardator\Parser\Parser;
 
+use Symfony\Component\DomCrawler\Crawler;
 
 class CardatorTest extends \PHPUnit_Framework_TestCase{
     
     private $cardator;
-    private $cardProcessor;
+    private $mockProcessor;
+    private $mockParser;
     
     public function setUp(){
-        $this->cardProcessor=$this->getMock('Uthmordar\Cardator\Card\CardProcessor', [], []);
-        $this->cardator=new Cardator(new CardGenerator, $this->cardProcessor, new Parser);
+        $this->mockProcessor=$this->getMock('Uthmordar\Cardator\Card\CardProcessor', [], []);
+        $this->mockParser=$this->getMock('Uthmordar\Cardator\Parser\Parser', [], []);
+        $this->cardator=new Cardator(new CardGenerator, $this->mockProcessor, new Parser);
     }
 
     public function tearDown() {
@@ -52,7 +55,7 @@ class CardatorTest extends \PHPUnit_Framework_TestCase{
      * test getting card from cardator
      */
     public function testGetCards(){
-        $this->cardProcessor->expects($this->exactly(1))->method('getCards');
+        $this->mockProcessor->expects($this->exactly(1))->method('getCards');
         $this->cardator->getCards();
     }
     
@@ -60,7 +63,7 @@ class CardatorTest extends \PHPUnit_Framework_TestCase{
      * test dependancy addOnly Processor from cardator
      */
     public function testAddOnly(){
-        $this->cardProcessor->expects($this->exactly(1))->method('addOnly');
+        $this->mockProcessor->expects($this->exactly(1))->method('addOnly');
         $this->cardator->addOnly('Thing');
     }
     
@@ -68,7 +71,7 @@ class CardatorTest extends \PHPUnit_Framework_TestCase{
      * test dependancy addExcept Processor from cardator
      */
     public function testAddExcept(){
-        $this->cardProcessor->expects($this->exactly(1))->method('addExcept');
+        $this->mockProcessor->expects($this->exactly(1))->method('addExcept');
         $this->cardator->addExcept('Thing');
     }
     
@@ -76,7 +79,7 @@ class CardatorTest extends \PHPUnit_Framework_TestCase{
      * test dependancy doPostProcess Processor from cardator
      */
     public function testDoPostProcess(){
-        $this->cardProcessor->expects($this->exactly(1))->method('doPostProcess');
+        $this->mockProcessor->expects($this->exactly(1))->method('doPostProcess');
         $this->cardator->doPostProcess();
     }
     
@@ -84,21 +87,74 @@ class CardatorTest extends \PHPUnit_Framework_TestCase{
      * test dependancy addPostProcessTreatment Processor from cardator
      */
     public function testAddPostProcessTreatment(){
-        $this->cardProcessor->expects($this->exactly(1))->method('addPostProcessTreatment');
+        $this->mockProcessor->expects($this->exactly(1))->method('addPostProcessTreatment');
         $this->cardator->addPostProcessTreatment('test', function(){});
     }
     
-    /*public function testCrawl(){
+    /**
+     * test html crawling is effectively call during crawling
+     * @return Cardator
+     */
+    public function testCrawl(){
+        $html ="<html>
+            <head>
+                <title>Title</title>
+            </head>
+            <body>
+                <h2 class='message'>Hello World!</h2>
+                <p>Hello Crawler!</p>
+            </body>
+        </html>";
+
+        $crawler = new Crawler($html);
+        
+        $this->mockParser->expects($this->exactly(3))->method('getCrawler')->willReturn($crawler);
+        $cardator=new Cardator(new CardGenerator, new CardProcessor, $this->mockParser);
+        $cardator->crawl('http://test.tanguygodin.fr/test.html');
+        return $cardator;
+    }
+    
+    /**
+     * test generic card is set with no microdata
+     * @depends testCrawl
+     */
+    public function testGenericCard($cardator){
+        $cards=$cardator->getCards();
+        foreach($cards as $card){
+            $this->assertEquals($card->name, 'Hello World!');
+            $this->assertEquals($card->description, 'Title');
+        }
+    }
+    
+    /**
+     * test parser method call during crawling
+     */
+    public function testCrawlMicrodata(){
+        $html ="<html>
+            <body>
+                <div itemscope itemtype='http://schema.org/Article'>
+                    <h2 itemprop='name' class='message'>Hello World!</h2>
+                    <p>Hello Crawler!</p>
+                </div>
+            </body>
+        </html>";
+
+        $crawler = new Crawler($html);
+        
+        $this->mockParser->expects($this->exactly(1))->method('getCrawler')->willReturn($crawler);
+        $this->mockParser->expects($this->exactly(1))->method('getCardType')->willReturn('Article');
+        $this->mockParser->expects($this->exactly(1))->method('setCardProperties');
+        $cardator=new Cardator(new CardGenerator, new CardProcessor, $this->mockParser);
+        $cardator->crawl('http://test.tanguygodin.fr/test.html');
+    }
+    
+    /**
+     * test process
+     */
+    public function testCrawlGlobal(){
         $cardator=new Cardator(new CardGenerator, new CardProcessor, new Parser);
         $cardator->crawl('http://test.tanguygodin.fr/test.html');
         $cards=$cardator->getCards(true);
         $this->assertTrue(is_string($cards));
     }
-    
-    public function testCrawlNoMicrodata(){
-        $cardator=new Cardator(new CardGenerator, new CardProcessor, new Parser);
-        $cardator->crawl('http://php.net');
-        $cards=$cardator->getCards(true);
-        $this->assertTrue(is_string($cards));
-    }*/
 }

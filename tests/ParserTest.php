@@ -16,9 +16,16 @@ class ParserTest extends \PHPUnit_Framework_TestCase{
      * @return type
      */
     public function testSetCrawler(){
-        $this->parser->setCrawler('http://google.fr');
         $this->assertTrue($this->parser->setCrawler('http://google.fr') instanceof \Uthmordar\Cardator\Parser\Parser);
         return $this->parser;
+    }
+    
+    /**
+     * @expectedException \RuntimeException
+     * @expectedExceptionMessage Invalid crawling url 
+     */
+    public function testSetCrawlerInvalidUrl(){
+        $this->parser->setCrawler('invalid.url');
     }
     
     /**

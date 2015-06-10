@@ -3,6 +3,7 @@
 namespace Uthmordar\Cardator\Parser;
 
 use Goutte\Client;
+use Symfony\Component\DomCrawler\Crawler;
 
 class Parser implements iParser{
     private $client;
@@ -18,19 +19,41 @@ class Parser implements iParser{
      * @return \Uthmordar\Cardator\Parser\Parser
      */
     public function setCrawler($url){
-        /*$fUrl=filter_var($url, FILTER_VALIDATE_URL, FILTER_FLAG_PATH_REQUIRED);
+        $fUrl=filter_var($url, FILTER_VALIDATE_URL);
         if(!$fUrl){
             throw new \RuntimeException('Invalid crawling url');
-        }*/
+        }
         $this->crawler=$this->client->request('GET', $url);
         return $this;
     }
     
     /**
      * 
-     * @return type
+     * @return Crawler
      */
     public function getCrawler(){
         return $this->crawler;
+    }
+    
+    /**
+     * get card type by crawling
+     * 
+     * @param Crawler $node
+     * @return string Card type
+     */
+    public function getCardType($node){
+        return MicroDataCrawler::getCardTypeFromCrawler($node);
+    }
+    
+    /**
+     * hydrate card by crawling dom
+     * 
+     * @param \Crawler $node
+     * @param \Uthmordar\Cardator\Card\lib\iCard $card
+     */
+    public function setCardProperties($node, \Uthmordar\Cardator\Card\lib\iCard $card){
+        MicroDataCrawler::manageItemIdProperty($node, $card);
+        MicroDataCrawler::manageItemrefProperty($node, $card, $this->crawler);
+        MicroDataCrawler::getScopeContent($node, $card);
     }
 }

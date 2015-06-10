@@ -2,8 +2,6 @@
 
 namespace Uthmordar\Cardator;
 
-use Uthmordar\Cardator\Parser\MicroDataCrawler;
-
 /**
  * Coordinate all classes for the vendor and allows simple use of it
  */
@@ -90,7 +88,7 @@ class Cardator{
     private function setCardFromMD($scope, $url){
         $scope->each(function($node) use($url){
             try{
-                $type=MicroDataCrawler::getCardTypeFromCrawler($node);
+                $type=$this->parser->getCardType($node);
                 $card=$this->createCard($type);
             }catch(\RuntimeException $e){
                 $card=$this->createCard('Thing');
@@ -98,9 +96,7 @@ class Cardator{
             $card->child=count($node->filter('[itemscope]'))-1;
             $card->url=$url;
             
-            MicroDataCrawler::manageItemIdProperty($node, $card);
-            MicroDataCrawler::manageItemrefProperty($node, $card, $this->parser->getCrawler());
-            MicroDataCrawler::getScopeContent($node, $card);
+            $this->parser->setCardProperties($node, $card);
             
             $this->saveCard($card);
         });
