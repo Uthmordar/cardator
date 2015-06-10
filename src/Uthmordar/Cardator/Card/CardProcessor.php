@@ -160,16 +160,43 @@ class CardProcessor extends CardContainer{
             'class'=>$card->getQualifiedName()
         ];
         foreach($card->properties as $property){
-            if($card->$property instanceof \DateTime){
-                $array[$property]=$card->$property->getTimestamp();
-                continue;
-            }
-            if($card->$property instanceof lib\iCard){
-                $array[$property]=$this->createArrayCard($card->$property);
-                continue;
-            }
-            $array[$property]=$card->$property;
+            $array=$this->formatProperties($card, $property, $array);
         }
         return $array;
+    }
+    
+    /**
+     * parse property value differently if it is an array or a single value
+     * 
+     * @param \Uthmordar\Cardator\Card\lib\iCard $card
+     * @param string $property
+     * @param array $array
+     * @return type
+     */
+    public function formatProperties(lib\iCard $card, $property, array $array){
+        if(is_array($card->$property)){
+            foreach($card->$property as $p){
+                $array[$property][]=$this->formatToJsonCardProperties($p);
+            }
+        }else{
+            $array[$property]=$this->formatToJsonCardProperties($card->$property);
+        }
+        return $array;
+    }
+    
+    /**
+     * return stringified data from different input types (Card, Datetime, string)
+     * 
+     * @param string $propertyValue
+     * @return string stringified value
+     */
+    public function formatToJsonCardProperties($propertyValue){
+        if($propertyValue instanceof \DateTime){
+            return $propertyValue->getTimestamp();
+        }
+        if($propertyValue instanceof lib\iCard){
+            return $this->createArrayCard($propertyValue);
+        }
+        return $propertyValue;
     }
 }

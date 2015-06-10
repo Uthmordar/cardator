@@ -141,9 +141,9 @@ class CardProcessorTest extends \PHPUnit_Framework_TestCase{
         $card=new Uthmordar\Cardator\Card\lib\Thing;
         $card->dateTest=new Datetime();
         $card->cardTest=new Uthmordar\Cardator\Card\lib\Thing;
-        $card->test='test';
+        $card->test=['test', 'test2'];
         $array=$this->container->createArrayCard($card);
-        $this->assertEquals($array['test'], 'test');
+        $this->assertEquals($array['test'], ['test', 'test2']);
         $this->assertTrue(is_array($array['cardTest']));
     }
 }
