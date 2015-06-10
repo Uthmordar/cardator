@@ -124,8 +124,8 @@ class Thing extends FilterCard implements iCard{
         if(array_key_exists($name, $this->params)) {
             return $this->params[$name];
         }
-
-        throw new \RuntimeException("Undefined property $name for {$this->getQualifiedName()}");
+        return null;
+        //throw new \RuntimeException("Undefined property $name for {$this->getQualifiedName()}");
     }
       
     /**
