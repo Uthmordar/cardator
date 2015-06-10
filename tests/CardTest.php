@@ -38,6 +38,28 @@ class CardTest extends \PHPUnit_Framework_TestCase{
         $this->assertEquals($this->card->notProperty, "test");
     }
     
+    public function testOnlyReplace(){
+        $this->card->child=1;
+        $this->card->child=2;
+        $this->assertEquals($this->card->child, 2);
+    }
+    
+    public function testSetCardMultipleParamsOneProperty(){
+        $this->card->name="Name";
+        $this->card->name="New Name";
+        $this->assertEquals($this->card->name, ['Name', 'New Name']);
+        $this->card->name="Another name";
+        $this->assertEquals($this->card->name, ['Name', 'New Name', 'Another name']);
+    }
+    
+    public function testSetCardMultipleParamsOneParams(){
+        $this->card->paramTest="Name";
+        $this->card->paramTest="New Name";
+        $this->assertEquals($this->card->paramTest, ['Name', 'New Name']);
+        $this->card->paramTest="Another name";
+        $this->assertEquals($this->card->paramTest, ['Name', 'New Name', 'Another name']);
+    }
+    
     /**
      * test if __call update params/property && allows access to it
      */
