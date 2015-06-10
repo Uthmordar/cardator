@@ -1,0 +1,6 @@
+v 1.2.0
+	* implements multiple values for one property in card
+
+v 1.1.*
+	* externalize Crawling operations from cardator to parser
+	* change parents hierarchy system for cards in library
