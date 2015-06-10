@@ -71,7 +71,7 @@ class MicroDataCrawler{
             $src=$node->attr('content');
         }
         if($src!=null){
-            $img=(!strpos($src, '/') && $card->url[strlen($card->url)-1]!=='/')? substr($card->url, 0, strrpos($card->url, '/')+1) . $src : $src;
+            $img=(!strpos($src, '/') && $card->url[strlen($card->url)-1]!=='/' && strrpos($card->url, '/')>8)? substr($card->url, 0, strrpos($card->url, '/')+1) . $src : $src;
             $card->$prop=($img[0]=='/')? $card->url . $img : $img;
             
             return true;
