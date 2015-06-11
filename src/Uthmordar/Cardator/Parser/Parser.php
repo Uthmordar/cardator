@@ -11,6 +11,10 @@ class Parser implements iParser{
     
     public function __construct(){
         $this->client=new Client();
+        /** allow https parsing */
+        $guzzle=$this->client->getClient();
+        $guzzle->setDefaultOption('verify', false);
+        $this->client->setClient($guzzle);
     }
     
     /**
