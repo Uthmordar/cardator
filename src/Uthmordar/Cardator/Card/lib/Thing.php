@@ -76,7 +76,7 @@ class Thing extends FilterCard implements iCard{
     protected function setCardProperty($name, $value){
         $valF=$this->filterValue($name, $value);
         $val=($valF)? $valF : $value;
-        $cleanVal=(is_string($val))? htmlentities(utf8_decode($val)) : $val;
+        $cleanVal=(is_string($val))? utf8_decode($val) : $val;
         if(property_exists($this, $name)){
             if(in_array($name, $this->onlyReplace)){
                 $this->$name=$cleanVal;

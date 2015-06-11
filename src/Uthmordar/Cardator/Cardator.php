@@ -111,10 +111,10 @@ class Cardator{
         $card=$this->createCard('Thing');
         $card->url=$url;
         $this->parser->getCrawler()->filter('h2')->each(function($node) use($card){
-           $card->name=trim($node->text()); 
+            $card->name=trim($node->text()); 
         });
         $this->parser->getCrawler()->filter('title')->each(function($node) use($card){
-           $card->description=trim($node->text()); 
+            $card->description=trim($node->text());
         });
         $this->saveCard($card);
     }
@@ -126,7 +126,7 @@ class Cardator{
         $cards=$this->container->getNonFilterCards();
         $i=0;
         foreach($cards as $card){
-            if($card->childList){
+            if(!empty($card->childList)){
                 $this->setRelationship($card, $i, $cards);
             }
             $i++;
