@@ -1,3 +1,6 @@
+v 1.2.1
+        * disallow ssl certification in Guzzle to allow https parsing 
+
 v 1.2.0
 	* implements multiple values for one property in card
 
