@@ -40,7 +40,7 @@ class MicroDataCrawler{
     }
     
     /**
-     * get value if node as dk-raw attr
+     * get value if node as dk-raw attr or content attr
      * 
      * @param Crawler $node
      * @param type $prop
@@ -50,6 +50,10 @@ class MicroDataCrawler{
     private static function manageRawProperty(Crawler $node, $prop, iCard $card){
         if($node->attr('dk-raw')){
             $card->$prop=$node->attr('dk-raw');
+            return true;
+        }
+        if($node->attr('content')){
+            $card->$prop=$node->attr('content');
             return true;
         }
     }
@@ -66,9 +70,6 @@ class MicroDataCrawler{
         $src=null;
         if($node->attr('src')){
             $src=$node->attr('src');
-        }
-        if($node->attr('content')){
-            $src=$node->attr('content');
         }
         if($src!=null){
             $img=(!strpos($src, '/') && $card->url[strlen($card->url)-1]!=='/' && strrpos($card->url, '/')>8)? substr($card->url, 0, strrpos($card->url, '/')+1) . $src : $src;
