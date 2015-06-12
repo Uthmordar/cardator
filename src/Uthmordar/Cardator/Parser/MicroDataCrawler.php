@@ -52,7 +52,7 @@ class MicroDataCrawler{
             $card->$prop=$node->attr('dk-raw');
             return true;
         }
-        if($node->attr('content')){
+        if($node->attr('content') && $prop!='image'){
             $card->$prop=$node->attr('content');
             return true;
         }
@@ -70,6 +70,9 @@ class MicroDataCrawler{
         $src=null;
         if($node->attr('src')){
             $src=$node->attr('src');
+        }
+        if($node->attr('content')){
+            $src=$node->attr('content');
         }
         if($src!=null){
             $img=(!strpos($src, '/') && $card->url[strlen($card->url)-1]!=='/' && strrpos($card->url, '/')>8)? substr($card->url, 0, strrpos($card->url, '/')+1) . $src : $src;
