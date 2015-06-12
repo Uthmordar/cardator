@@ -56,7 +56,7 @@ class Thing extends FilterCard implements iCard{
      * @return \Uthmordar\Cardator\Card\lib\Thing
      */
     public function replaceCardProperty($name, $value){
-        $cleanVal=(is_string($value))? htmlentities(utf8_decode($value)) : $value;
+        $cleanVal=(is_string($value))? utf8_decode($value) : $value;
         if(property_exists($this, $name)){
             $this->$name=$cleanVal;
             return $this;

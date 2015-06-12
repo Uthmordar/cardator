@@ -176,10 +176,10 @@ class CardProcessor extends CardContainer{
     public function formatProperties(lib\iCard $card, $property, array $array){
         if(is_array($card->$property)){
             foreach($card->$property as $p){
-                $array[$property][]=$this->formatToJsonCardProperties($p);
+                $array[$property][]=(is_string($p))? utf8_encode($this->formatToJsonCardProperties($p)) : $this->formatToJsonCardProperties($p);
             }
         }else{
-            $array[$property]=$this->formatToJsonCardProperties($card->$property);
+            $array[$property]=(is_string($card->$property))? utf8_encode($this->formatToJsonCardProperties($card->$property)) : $this->formatToJsonCardProperties($card->$property);
         }
         return $array;
     }

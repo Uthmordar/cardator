@@ -2,7 +2,7 @@
 
 ## Cardator Package
 
-v 1.2.1
+v 1.2.2
 
 Allows web page parsing and gather microdata.
 

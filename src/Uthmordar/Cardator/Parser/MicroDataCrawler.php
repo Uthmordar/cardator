@@ -36,7 +36,7 @@ class MicroDataCrawler{
         if(self::manageImgProperty($node, $property, $card)){return true;}
         if(self::manageLinkProperty($node, $property, $card)){return true;}
         if(self::manageNumericProperty($node, $property, $card)){return true;}
-        $card->$property=trim($node->text());
+        if(!$isItemref){$card->$property=trim($node->text());}
     }
     
     /**

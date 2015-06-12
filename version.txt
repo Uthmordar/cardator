@@ -1,3 +1,7 @@
+v 1.2.2
+        * fix itemref double registration if no direct child
+        * add utf8_encode for json generation
+
 v 1.2.1
         * disallow ssl certification in Guzzle to allow https parsing 
 
