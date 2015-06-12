@@ -153,19 +153,8 @@ class MicroDataCrawler{
     private static function nestedScope(Crawler $node, iCard $card, $property, $isItemref){
         if($node->attr('itemscope')!==null){
             if($isItemref){
-                $generator=new CardGenerator();
-                try{
-                    $type=self::getCardTypeFromCrawler($node);
-                    $child=$generator->createCard($type);
-                }catch(\RuntimeException $e){
-                    $child=$generator->createCard('Thing');
-                }
-                
-                $child->child=count($node->filter('[itemscope]'))-1;
+                $child=self::subCardGeneration($node);
                 $child->url=$card->url;
-                
-                self::manageItemIdProperty($node, $child);
-                self::getScopeContent($node, $child);
                 
                 $card->$property=$child;
                 return true;
@@ -173,6 +162,29 @@ class MicroDataCrawler{
                 return self::updateChildList($card, $property);
             }
         }
+    }
+    
+    /**
+     * create children Card from scope
+     * 
+     * @param Crawler $node
+     * @return iCard
+     */
+    private static function subCardGeneration(Crawler $node){
+        $generator=new CardGenerator();
+        try{
+            $type=self::getCardTypeFromCrawler($node);
+            $child=$generator->createCard($type);
+        }catch(\RuntimeException $e){
+            $child=$generator->createCard('Thing');
+        }
+
+        $child->child=count($node->filter('[itemscope]'))-1;
+
+        self::manageItemIdProperty($node, $child);
+        self::getScopeContent($node, $child);
+        
+        return $child;
     }
     
     /**

@@ -126,12 +126,14 @@ class CardProcessorTest extends \PHPUnit_Framework_TestCase{
         $this->assertEquals(['titi', 'titi'], $card->testProp);
     }
     
-    /*
+    
+    /**
      * @expectedException RuntimeException
      */
     public function testApplyFilterOnProperty(){
         $card=new Uthmordar\Cardator\Card\lib\Thing;
-        $this->container->applyFilterOnProperty($card, 'test_no_prop', function($name, $value){return 'titi';});
+        $this->assertFalse($this->container->applyFilterOnProperty($card, 'test_no_prop', function($name, $value){return 'titi';}));
+        $card->test_no_prop(['filtered'=>$this->container->getFilterResultOnProperty($card, 'test_no_prop', function($name, $value){return 'titi';}), 'replace'=>true]);
     }
     
     /**

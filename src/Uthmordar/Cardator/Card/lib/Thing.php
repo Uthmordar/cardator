@@ -61,7 +61,9 @@ class Thing extends FilterCard implements iCard{
             $this->$name=$cleanVal;
             return $this;
         }
-        
+        if(empty($this->params[$name])){
+            throw new \RuntimeException('No filter to apply');
+        }
         $this->params[$name]=$cleanVal;
         return $this;
     }

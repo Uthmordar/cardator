@@ -126,7 +126,7 @@ class Cardator{
         $cards=$this->container->getNonFilterCards();
         $i=0;
         foreach($cards as $card){
-            if(!empty($card->childList)){
+            if($card->childList){
                 $this->setRelationship($card, $i, $cards);
             }
             $i++;
