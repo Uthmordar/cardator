@@ -7,8 +7,8 @@ abstract class AbstractFacade{
         return call_user_func_array([$instance, $method],$args);
     }
 
-    public static function resolve($name){
+    /*public static function resolve($name){
         $className = '\\Facade\\Library\\' . ucfirst($name);
         return new $className;
-    }
+    }*/
 }
