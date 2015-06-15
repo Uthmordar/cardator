@@ -55,7 +55,7 @@ class MicroDataCrawler{
         if($isItemref){
             while(count($nd)){
                 if($nd->attr('itemscope')!==null){
-                    return false;
+                    return true;
                 }
                 $nd=$nd->parents();
             }
@@ -115,7 +115,7 @@ class MicroDataCrawler{
      */
     private function manageNumericProperty(Crawler $node, $prop, iCard $card){
         if($node->attr('value')){
-            $card->$prop=(float) $node->attr('value');
+            $card->$prop=floatval($node->attr('value'));
             return true;
         }
     }

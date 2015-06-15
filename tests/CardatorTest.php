@@ -115,6 +115,16 @@ class CardatorTest extends \PHPUnit_Framework_TestCase{
     }
     
     /**
+     * @expectedException RuntimeException
+     * @expectedExceptionMessage Header error 404
+     */
+    public function testExceptionCrawl(){
+        $cardator=new Cardator(new CardGenerator, new CardProcessor, new Parser);
+        $cardator->crawl('http://test.tanguygodin.fr/404url.html');
+        $this->assertEquals($cardator->getStatus(), 404);
+    }
+    
+    /**
      * test generic card is set with no microdata
      * @depends testCrawl
      */
@@ -129,7 +139,7 @@ class CardatorTest extends \PHPUnit_Framework_TestCase{
     /**
      * test parser method call during crawling
      */
-    /*public function testCrawlMicrodata(){
+    public function testCrawlMicrodata(){
         $html ="<html>
             <body>
                 <div itemscope itemtype='http://schema.org/Article'>
@@ -149,10 +159,19 @@ class CardatorTest extends \PHPUnit_Framework_TestCase{
     }
     
 
+    /**
+     * test data from crawl
+     */
     public function testCrawlGlobal(){
         $cardator=new Cardator(new CardGenerator, new CardProcessor, new Parser);
         $cardator->crawl('http://test.tanguygodin.fr/test.html');
         $cards=$cardator->getCards(true);
         $this->assertTrue(is_string($cards));
-    }*/
+        
+        $this->assertTrue(is_int($cardator->getTotalCard()));
+        $this->assertEquals($cardator->getTotalCard(), count($cardator->getCards()));
+        $this->assertTrue(is_int($cardator->getStatus()));
+        $this->assertTrue(is_float($cardator->getExecutionTime()));
+        $this->assertTrue(is_array($cardator->getExecutionData()));
+    }
 }

@@ -17,7 +17,13 @@ class ParserTest extends \PHPUnit_Framework_TestCase{
      */
     public function testSetCrawler(){
         $this->assertTrue($this->parser->setCrawler('http://google.fr') instanceof \Uthmordar\Cardator\Parser\Parser);
+        $this->assertEquals($this->parser->getStatus(), 200);
         return $this->parser;
+    }
+    
+    public function test404(){
+        $this->parser->setCrawler('http://test.tanguygodin.fr/notfound.fr');
+        $this->assertEquals($this->parser->getStatus(), 404);
     }
     
     /**

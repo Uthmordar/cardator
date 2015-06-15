@@ -1,3 +1,8 @@
+v 1.3.0
+        * fix itemref nested scope
+        * implements singleton facade for MicroDataCrawler
+        * implements some processing informations (execution time, header error, nb cards) in Cardator
+
 v 1.2.2
         * fix itemref double registration if no direct child
         * add utf8_encode for json generation

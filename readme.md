@@ -31,7 +31,7 @@ try{
     /* Thing type card will not be given in output */
     $cardator->addExcept('Thing');
 
-    /* choose url to crawl and extract data */
+    /* choose url to crawl and extract data, throw RuntimeException if header status 400+ */
     $crawl=$cardator->crawl('http://google.fr');
     
     /* given closure will be use on given property for all card during the postprocess */
@@ -61,6 +61,16 @@ This tool crawl webpages searching for [microdata](https://html.spec.whatwg.org/
 It will also tracks some special attributes and link them to given itemprop:
   * dk-raw is an attribute you should use to give informations usable only by developers or robots such as datetime instead of human readable date.
 
+
+You could access some processing informations as follow:
+
+```
+    $cardator->getTotalCard(); // Give number of card found
+    $cardator->getExecutionTime(); // return crawl duration in ms
+    $cardator->getStatus(); // return crawler http status
+
+    $cardator->getExecutionData(); // return previous informations as array
+```
 
 
 ### Card generation:
