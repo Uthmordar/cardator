@@ -8,6 +8,7 @@ use Uthmordar\Cardator\Parser\Facade\MicroDataCrawler;
 class Parser implements iParser{
     private $client;
     private $crawler;
+    private $status;
     
     public function __construct(){
         $this->client=new Client();
@@ -28,7 +29,16 @@ class Parser implements iParser{
             throw new \RuntimeException('Invalid crawling url');
         }
         $this->crawler=$this->client->request('GET', $url);
+        $this->status=$this->client->getResponse()->getStatus();
         return $this;
+    }
+    
+    /**
+     * 
+     * @return http status
+     */
+    public function getStatus(){
+        return $this->status;
     }
     
     /**

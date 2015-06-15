@@ -46,12 +46,12 @@ class MicroDataCrawler{
     private function setCardProperty(Crawler $node, iCard $card, $isItemref=false){
         $property=$node->attr('itemprop');
         if($node->parents()->attr('itemscope')!==null){return false;}
-        if($this->nestedScope($node, $card, $property, $isItemref)){return true;}
+        if($this->nestedScope($node, $card, $property, $isItemref)){var_dump('1');return true;}
         if($this->manageRawProperty($node, $property, $card)){return true;}
         if($this->manageImgProperty($node, $property, $card)){return true;}
         if($this->manageLinkProperty($node, $property, $card)){return true;}
         if($this->manageNumericProperty($node, $property, $card)){return true;}
-        if(!$isItemref){$card->$property=trim($node->text());}
+        $card->$property=trim($node->text());
     }
     
     /**
@@ -154,7 +154,7 @@ class MicroDataCrawler{
             $ids=explode(' ', $node->attr('itemref'));
             foreach($ids as $id){
                 $crawler->filter('#'.trim($id))->each(function($node) use($card){
-                   $this->getScopeContent($node, $card, true); 
+                    $this->getScopeContent($node, $card, true);
                 });
             }
             return true;

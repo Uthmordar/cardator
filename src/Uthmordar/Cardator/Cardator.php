@@ -9,6 +9,9 @@ class Cardator{
     private $generator;
     private $container;
     private $parser;
+    private $totalCard;
+    private $status;
+    private $executionTime;
     
     public function __construct(Card\iCardatorGenerator $generator, Card\iCardatorContainer $container, Parser\iParser $parser){
         $this->generator=$generator;
@@ -69,13 +72,22 @@ class Cardator{
      * @param string $url
      */
     public function crawl($url){
+        $start=microtime(true);
         $this->parser->setCrawler($url);
+        $this->status=$this->parser->getStatus();
+        if((int) $this->parser->getStatus()>399){
+            $this->totalCard=count($this->getCards());
+            $this->executionTime=microtime(true)-$start;
+            throw new \RuntimeException("Header error ".$this->parser->getStatus());
+        }
         $scope=$this->parser->getCrawler()->filter('[itemscope]');
         if(count($scope)){
             $this->setCardFromMD($scope, $url);
         }else{
             $this->setGenericCard($url);
         }
+        $this->totalCard=count($this->getCards());
+        $this->executionTime=microtime(true)-$start;
         $this->checkRelationship();
     }
     
@@ -163,5 +175,41 @@ class Cardator{
      */
     public function doPostProcess(){
         $this->container->doPostProcess();
+    }
+    
+    /**
+     * get number of card found in pages
+     * @return int
+     */
+    public function getTotalCard(){
+        return $this->totalCard;
+    }
+    
+    /**
+     * get crawling execution time in ms
+     * @return float
+     */
+    public function getExecutionTime(){
+        return $this->executionTime;
+    }
+    
+    /**
+     * get http response status for page crawled
+     * @return int
+     */
+    public function getStatus(){
+        return $this->status;
+    }
+    
+    /**
+     * get data relative to execution
+     * @return array
+     */
+    public function getExecutionData(){
+        return [
+            'cards'         => $this->totalCard,
+            'executionTime' => $this->executionTime,
+            'httpStatus'    => $this->status
+        ];
     }
 }
