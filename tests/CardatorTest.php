@@ -129,7 +129,7 @@ class CardatorTest extends \PHPUnit_Framework_TestCase{
     /**
      * test parser method call during crawling
      */
-    public function testCrawlMicrodata(){
+    /*public function testCrawlMicrodata(){
         $html ="<html>
             <body>
                 <div itemscope itemtype='http://schema.org/Article'>
@@ -148,13 +148,11 @@ class CardatorTest extends \PHPUnit_Framework_TestCase{
         $cardator->crawl('http://test.tanguygodin.fr/test.html');
     }
     
-    /**
-     * test process
-     */
+
     public function testCrawlGlobal(){
         $cardator=new Cardator(new CardGenerator, new CardProcessor, new Parser);
         $cardator->crawl('http://test.tanguygodin.fr/test.html');
         $cards=$cardator->getCards(true);
         $this->assertTrue(is_string($cards));
-    }
+    }*/
 }

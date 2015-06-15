@@ -1,9 +1,9 @@
 <?php
-
 namespace Uthmordar\Cardator\Parser;
 
 use Goutte\Client;
 use Symfony\Component\DomCrawler\Crawler;
+use Uthmordar\Cardator\Parser\Facade\MicroDataCrawler;
 
 class Parser implements iParser{
     private $client;
