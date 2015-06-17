@@ -101,7 +101,6 @@ class MicroDataCrawler{
         if($src!=null){
             $img=(!strpos($src, '/') && $card->url[strlen($card->url)-1]!=='/' && strrpos($card->url, '/')>8)? substr($card->url, 0, strrpos($card->url, '/')+1) . $src : $src;
             $card->$prop=($img[0]=='/')? $card->url . $img : $img;
-            
             return true;
         }
     }
@@ -181,8 +180,7 @@ class MicroDataCrawler{
     private function nestedScope(Crawler $node, iCard $card, $property, $isItemref){
         if($node->attr('itemscope')!==null){
             if($isItemref){
-                $child=$this->subCardGeneration($node);
-                $child->url=$card->url;
+                $child=$this->subCardGeneration($node, $card->url);
                 
                 $card->$property=$child;
                 return true;
@@ -198,7 +196,7 @@ class MicroDataCrawler{
      * @param Crawler $node
      * @return iCard
      */
-    private function subCardGeneration(Crawler $node){
+    private function subCardGeneration(Crawler $node, $url){
         $generator=new CardGenerator();
         try{
             $type=$this->getCardTypeFromCrawler($node);
@@ -206,7 +204,7 @@ class MicroDataCrawler{
         }catch(\RuntimeException $e){
             $child=$generator->createCard('Thing');
         }
-
+        $child->url=$url;
         $child->child=count($node->filter('[itemscope]'))-1;
 
         $this->manageItemIdProperty($node, $child);
