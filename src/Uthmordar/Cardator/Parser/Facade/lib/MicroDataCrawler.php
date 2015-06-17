@@ -6,6 +6,9 @@ use \Symfony\Component\DomCrawler\Crawler;
 use \Uthmordar\Cardator\Card\lib\iCard;
 use \Uthmordar\Cardator\Card\CardGenerator;
 
+/**
+ * regroup all crawling operations needed for microdata extraction
+ */
 class MicroDataCrawler{
     private static $instance = null;
     private function __construct(){}

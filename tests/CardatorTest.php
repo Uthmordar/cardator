@@ -12,11 +12,13 @@ class CardatorTest extends \PHPUnit_Framework_TestCase{
     private $cardator;
     private $mockProcessor;
     private $mockParser;
+    private $parser;
     
     public function setUp(){
+        $this->parser=new Parser;
         $this->mockProcessor=$this->getMock('Uthmordar\Cardator\Card\CardProcessor', [], []);
         $this->mockParser=$this->getMock('Uthmordar\Cardator\Parser\Parser', [], []);
-        $this->cardator=new Cardator(new CardGenerator, $this->mockProcessor, new Parser);
+        $this->cardator=new Cardator(new CardGenerator, $this->mockProcessor, $this->parser);
     }
 
     public function tearDown() {
@@ -108,7 +110,8 @@ class CardatorTest extends \PHPUnit_Framework_TestCase{
 
         $crawler = new Crawler($html);
         
-        $this->mockParser->expects($this->exactly(3))->method('getCrawler')->willReturn($crawler);
+        $this->mockParser->expects($this->exactly(2))->method('getCrawler')->willReturn($crawler);
+        $this->mockParser->expects($this->exactly(1))->method('setGenericCard');
         $cardator=new Cardator(new CardGenerator, new CardProcessor, $this->mockParser);
         $cardator->crawl('http://test.tanguygodin.fr/test.html');
         return $cardator;
@@ -126,14 +129,24 @@ class CardatorTest extends \PHPUnit_Framework_TestCase{
     
     /**
      * test generic card is set with no microdata
-     * @depends testCrawl
      */
-    public function testGenericCard($cardator){
-        $cards=$cardator->getCards();
-        foreach($cards as $card){
-            $this->assertEquals($card->name, 'Hello World!');
-            $this->assertEquals($card->description, 'Title');
-        }
+    public function testGenericCard(){
+        $html ="<html>
+            <head>
+                <title>Title</title>
+            </head>
+            <body>
+                <h2 class='message'>Hello World!</h2>
+                <p>Hello Crawler!</p>
+            </body>
+        </html>";
+
+        $crawler = new Crawler($html);
+        $card=$this->cardator->createCard('Thing');
+        $this->parser->setGenericCard($card, $crawler);
+        
+        $this->assertEquals($card->name, 'Hello World!');
+        $this->assertEquals($card->description, 'Title');
     }
     
     /**

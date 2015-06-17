@@ -2,6 +2,9 @@
 
 namespace Uthmordar\Cardator\Card;
 
+/**
+ * SplObjectStorage and additional method to manage card
+ */
 abstract class CardContainer extends \SplObjectStorage implements iCardatorContainer{
     /**
      * 

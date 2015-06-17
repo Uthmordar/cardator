@@ -5,6 +5,9 @@ use Goutte\Client;
 use Symfony\Component\DomCrawler\Crawler;
 use Uthmordar\Cardator\Parser\Facade\MicroDataCrawler;
 
+/**
+ * allows page crawling with goutte client
+ */
 class Parser implements iParser{
     private $client;
     private $crawler;
@@ -69,5 +72,18 @@ class Parser implements iParser{
         MicroDataCrawler::manageItemIdProperty($node, $card);
         MicroDataCrawler::manageItemrefProperty($node, $card, $this->crawler);
         MicroDataCrawler::getScopeContent($node, $card);
+    }
+    
+    /**
+     * 
+     * @param \Uthmordar\Cardator\Card\lib\iCard $card
+     */
+    public function setGenericCard(\Uthmordar\Cardator\Card\lib\iCard $card, Crawler $crawler){
+        $crawler->filter('h2')->each(function($node) use($card){
+            $card->name=trim($node->text()); 
+        });
+        $crawler->filter('title')->each(function($node) use($card){
+            $card->description=trim($node->text());
+        });
     }
 }

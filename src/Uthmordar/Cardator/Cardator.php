@@ -80,12 +80,14 @@ class Cardator{
             $this->executionTime=microtime(true)-$start;
             throw new \RuntimeException("Header error ".$this->parser->getStatus());
         }
+        
         $scope=$this->parser->getCrawler()->filter('[itemscope]');
         if(count($scope)){
             $this->setCardFromMD($scope, $url);
         }else{
             $this->setGenericCard($url);
         }
+        
         $this->totalCard=count($this->getCards());
         $this->executionTime=microtime(true)-$start;
         $this->checkRelationship();
@@ -122,12 +124,7 @@ class Cardator{
     private function setGenericCard($url){
         $card=$this->createCard('Thing');
         $card->url=$url;
-        $this->parser->getCrawler()->filter('h2')->each(function($node) use($card){
-            $card->name=trim($node->text()); 
-        });
-        $this->parser->getCrawler()->filter('title')->each(function($node) use($card){
-            $card->description=trim($node->text());
-        });
+        $this->parser->setGenericCard($card, $this->parser->getCrawler());
         $this->saveCard($card);
     }
     

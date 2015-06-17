@@ -11,6 +11,8 @@ class CardProcessor extends CardContainer{
     private $only=[];
     
     /**
+     * get cards from container as json output or store in iterable collection
+     * 
      * @param boolean $json true: result as json_encode, false: result as SPLObjectStorage collection
      * @return \Uthmordar\Cardator\Card\CardContainer
      */
@@ -28,6 +30,8 @@ class CardProcessor extends CardContainer{
     }
     
     /**
+     * get cards from container without applying filter
+     * 
      * @return \Uthmordar\Cardator\Card\CardContainer
      */
     public function getNonFilterCards(){
@@ -39,8 +43,10 @@ class CardProcessor extends CardContainer{
     }
     
     /**
+     * add given card type in only type card returned
+     * cardQualifiedName or cardQualifiedName array if an array is provided then this array erase previous only array
      * 
-     * @param cardQualifiedName or cardQualifiedName array $cardType if an array is provided then this array erase previous only array
+     * @param string or array $cardType
      */
     public function addOnly($cardType){
         if(is_array($cardType)){
@@ -51,8 +57,10 @@ class CardProcessor extends CardContainer{
     }
     
     /**
+     * add given card type in except type card which will not be returned
+     * cardQualifiedName or cardQualifiedName array $cardType if an array is provided then this array erase previous exception array
      * 
-     * @param cardQualifiedName or cardQualifiedName array $cardType if an array is provided then this array erase previous exception array
+     * @param string or array $cardType
      */
     public function addExcept($cardType){
         if(is_array($cardType)){
