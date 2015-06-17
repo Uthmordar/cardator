@@ -151,7 +151,9 @@ class MicroDataCrawler {
      */
     private function manageLinkProperty(Crawler $node, $prop, iCard $card) {
         if ($node->attr('href')) {
-            $card->$prop = ($node->attr('href')[0] == '/') ? $card->url . $node->attr('href') : $node->attr('href');
+            $href = $node->attr('href');
+            $link = (!strpos($href, '/') && $card->url[strlen($card->url) - 1] !== '/' && strrpos($card->url, '/') > 8) ? substr($card->url, 0, strrpos($card->url, '/') + 1) . $href : $href;
+            $card->$prop = ($link[0] == '/') ? $card->url . $link : $link;
             return true;
         }
     }
