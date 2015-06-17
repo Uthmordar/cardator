@@ -2,7 +2,9 @@
 
 namespace Uthmordar\Cardator\Card;
 
-interface iCardatorGenerator{ 
+interface iCardatorGenerator {
+
     public function createCard($type);
+
     public function checkClassExists($class, $type);
 }

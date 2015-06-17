@@ -5,26 +5,27 @@ namespace Uthmordar\Cardator\Card;
 /**
  * Allows instance card lib classes by class short name
  */
-class CardGenerator implements iCardatorGenerator{
+class CardGenerator implements iCardatorGenerator {
+
     private $card;
-    private $libPath="\Uthmordar\Cardator\Card\lib\\";
-    
+    private $libPath = "\Uthmordar\Cardator\Card\lib\\";
+
     /**
      * set card from library by className
      * 
      * @param classQualifiedName $type
      * @return iCard
      */
-    public function createCard($type){
-        $typeF=($type=="Class")? "Type" : $type;
-        $card=$this->libPath . ucfirst($typeF);
-    
+    public function createCard($type) {
+        $typeF = ($type == "Class") ? "Type" : $type;
+        $card = $this->libPath . ucfirst($typeF);
+
         $this->checkClassExists($card, $typeF);
-        $this->card=new $card;
+        $this->card = new $card;
 
         return $this->card;
     }
-    
+
     /**
      * 
      * @param classQualifiedName $className
@@ -32,10 +33,11 @@ class CardGenerator implements iCardatorGenerator{
      * @return boolean
      * @throws \RuntimeException
      */
-    public function checkClassExists($className, $type){
-        if(!class_exists($className)){
+    public function checkClassExists($className, $type) {
+        if (!class_exists($className)) {
             throw new \RuntimeException("$type type card not found.");
         }
         return true;
     }
+
 }

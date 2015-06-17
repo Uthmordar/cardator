@@ -2,7 +2,9 @@
 
 namespace Uthmordar\Cardator\Card;
 
-interface iCardatorContainer{ 
+interface iCardatorContainer {
+
     public function addCard(lib\iCard $card);
+
     public function getCards();
 }
