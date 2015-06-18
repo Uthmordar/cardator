@@ -25,7 +25,7 @@ use Uthmordar\Cardator\Parser\Parser;
 try{
     $cardator=new Cardator(new CardGenerator, new CardProcessor, new Parser);
 
-    /* give only Article type card in output */
+    /* give only Article type card in output (only has priority over except) */
     $cardator->addOnly('Article');
 
     /* Thing type card will not be given in output */

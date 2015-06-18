@@ -78,9 +78,9 @@ class CardProcessor extends CardContainer {
     private function isAllowedType($type) {
         if (empty($this->only) && empty($this->except)) {
             return $type;
-        } else if (in_array($type, $this->except)) {
-            return false;
         } else if (in_array($type, $this->only)) {
+            return $type;
+        } else if (in_array($type, $this->except) || !empty($this->only)) {
             return false;
         }
         return $type;
