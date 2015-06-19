@@ -60,6 +60,8 @@ This tool crawl webpages searching for [microdata](https://html.spec.whatwg.org/
 
 It will also tracks some special attributes and link them to given itemprop:
   * dk-raw is an attribute you should use to give informations usable only by developers or robots such as datetime instead of human readable date.
+  * content attribute could be use on meta tag to mark content hide to user
+  * value attr could be use to pass numeric value related to tag 
 
 
 You could access some processing informations as follow:
@@ -80,6 +82,9 @@ You could easily create Card object with:
 ```
     $cardator->createCard('Article');
 ```
+
+You could change card library by extending CardGenerator and giving a new library namespacing path as long as you respect interface implementation for cards 
+
 
 ### Card properties:
 
