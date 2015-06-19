@@ -184,7 +184,7 @@ class Cardator {
     }
 
     /**
-     * get crawling execution time in ms
+     * get crawling execution time in s
      * @return float
      */
     public function getExecutionTime() {

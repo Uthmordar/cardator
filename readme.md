@@ -68,7 +68,7 @@ You could access some processing informations as follow:
 
 ```
     $cardator->getTotalCard(); // Give number of card found
-    $cardator->getExecutionTime(); // return crawl duration in ms
+    $cardator->getExecutionTime(); // return crawl duration in s
     $cardator->getStatus(); // return crawler http status
 
     $cardator->getExecutionData(); // return previous informations as array
