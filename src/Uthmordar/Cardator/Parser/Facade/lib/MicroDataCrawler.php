@@ -17,9 +17,7 @@ class MicroDataCrawler {
         
     }
 
-    private function __clone() {
-        
-    }
+    private function __clone() {}
 
     public static function getInstance() {
         return self::$instance;
@@ -33,10 +31,13 @@ class MicroDataCrawler {
     }
 
     /**
-     * parse itemscope properties
+     * parse itemscope itemprop and hydrate given card
+     * 
+     * scope come from itemref, set isItemRef to true
      * 
      * @param Crawler $node
      * @param iCard $card
+     * @param boolean $isItemref
      */
     public function getScopeContent(Crawler $node, iCard $card, $isItemref = false) {
         $content = $node->html();
@@ -49,31 +50,22 @@ class MicroDataCrawler {
     /**
      * get itemprop given value && set the couple in Card
      * 
+     * if isItemref is set to true, then only itemprop who have no direct itemscope parent in node will be recorded
+     * 
      * @param Crawler $node
      * @param iCard $card
+     * @param boolean $isItemref
      * @return boolean
      */
     private function setCardProperty(Crawler $node, iCard $card, $isItemref = false) {
         $property = $node->attr('itemprop');
         $nd = $node;
-        if ($node->parents()->attr('itemscope') !== null) {
-            return false;
-        }
-        if ($this->nestedScope($node, $card, $property, $isItemref)) {
-            return true;
-        }
-        if ($this->manageRawProperty($node, $property, $card)) {
-            return true;
-        }
-        if ($this->manageImgProperty($node, $property, $card)) {
-            return true;
-        }
-        if ($this->manageLinkProperty($node, $property, $card)) {
-            return true;
-        }
-        if ($this->manageNumericProperty($node, $property, $card)) {
-            return true;
-        }
+        if ($node->parents()->attr('itemscope') !== null) { return false; }
+        if ($this->nestedScope($node, $card, $property, $isItemref)) { return true; }
+        if ($this->manageRawProperty($node, $property, $card)) { return true; }
+        if ($this->manageImgProperty($node, $property, $card)) { return true; }
+        if ($this->manageLinkProperty($node, $property, $card)) { return true; }
+        if ($this->manageNumericProperty($node, $property, $card)) { return true; }
         if ($isItemref) {
             while (count($nd)) {
                 if ($nd->attr('itemscope') !== null) {
@@ -128,6 +120,7 @@ class MicroDataCrawler {
     }
 
     /**
+     * set value attr
      * 
      * @param Crawler $node
      * @param string $prop
@@ -142,7 +135,7 @@ class MicroDataCrawler {
     }
 
     /**
-     * get value if node is a tag
+     * get value if node is link tag
      * 
      * @param Crawler $node
      * @param string $prop
@@ -159,7 +152,7 @@ class MicroDataCrawler {
     }
 
     /**
-     * get itemid prop value
+     * get itemid prop value, itemid should be "def:propname:propvalue"
      * 
      * @param Crawler $node
      * @param \Uthmordar\Cardator\Card\lib\iCard $card
@@ -177,8 +170,11 @@ class MicroDataCrawler {
     /**
      * get itemid prop value
      * 
+     * third params is initial page node 
+     * 
      * @param Crawler $node
-     * @param \Uthmordar\Cardator\Card\lib\iCard $card
+     * @param iCard $card
+     * @param Crawler $crawler
      * @return boolean
      */
     public function manageItemrefProperty(Crawler $node, iCard $card, $crawler) {
@@ -199,6 +195,7 @@ class MicroDataCrawler {
      * @param Crawler $node
      * @param iCard $card
      * @param string $property
+     * @param boolean $isItemref
      * @return boolean
      */
     private function nestedScope(Crawler $node, iCard $card, $property, $isItemref) {
@@ -218,6 +215,7 @@ class MicroDataCrawler {
      * create children Card from scope
      * 
      * @param Crawler $node
+     * @param string url
      * @return iCard
      */
     private function subCardGeneration(Crawler $node, $url) {

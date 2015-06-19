@@ -77,8 +77,7 @@ class Cardator {
         $this->parser->setCrawler($url);
         $this->status = $this->parser->getStatus();
         if ((int) $this->parser->getStatus() > 399) {
-            $this->totalCard = count($this->getCards());
-            $this->executionTime = microtime(true) - $start;
+            $this->setExecutionData($start);
             throw new \RuntimeException("Header error " . $this->parser->getStatus());
         }
 
@@ -89,8 +88,7 @@ class Cardator {
             $this->setGenericCard($url);
         }
 
-        $this->totalCard = count($this->getCards());
-        $this->executionTime = microtime(true) - $start;
+        $this->setExecutionData($start);
         $this->checkRelationship();
     }
 
@@ -181,6 +179,15 @@ class Cardator {
      */
     public function getTotalCard() {
         return $this->totalCard;
+    }
+    
+    /**
+     * 
+     * @param microtime $start
+     */
+    public function setExecutionData($start){
+        $this->totalCard = count($this->getCards());
+        $this->executionTime = microtime(true) - $start;
     }
 
     /**

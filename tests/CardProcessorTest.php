@@ -92,11 +92,12 @@ class CardProcessorTest extends \PHPUnit_Framework_TestCase {
         $this->container->addExcept('Thing');
         $this->container->addCard(new Uthmordar\Cardator\Card\lib\Thing);
         $this->container->addCard(new \Uthmordar\Cardator\Card\lib\Article);
+        $this->container->addCard(new \Uthmordar\Cardator\Card\lib\NewsArticle);
         $cards = $this->container->getNonFilterCards();
-        $this->assertEquals(2, count($cards));
+        $this->assertEquals(3, count($cards));
 
         $cards = $this->container->getCards();
-        $this->assertEquals(0, count($cards));
+        $this->assertEquals(1, count($cards));
     }
 
     /**

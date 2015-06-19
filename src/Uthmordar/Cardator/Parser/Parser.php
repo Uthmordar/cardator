@@ -5,6 +5,7 @@ namespace Uthmordar\Cardator\Parser;
 use Goutte\Client;
 use Symfony\Component\DomCrawler\Crawler;
 use Uthmordar\Cardator\Parser\Facade\MicroDataCrawler;
+use Uthmordar\Cardator\Card\lib\iCard;
 
 /**
  * allows page crawling with goutte client
@@ -67,20 +68,22 @@ class Parser implements iParser {
     /**
      * hydrate card by crawling dom
      * 
-     * @param \Crawler $node
-     * @param \Uthmordar\Cardator\Card\lib\iCard $card
+     * @param Crawler $node
+     * @param iCard $card
      */
-    public function setCardProperties($node, \Uthmordar\Cardator\Card\lib\iCard $card) {
+    public function setCardProperties($node, iCard $card) {
         MicroDataCrawler::manageItemIdProperty($node, $card);
         MicroDataCrawler::manageItemrefProperty($node, $card, $this->crawler);
         MicroDataCrawler::getScopeContent($node, $card);
     }
 
     /**
+     * hydrate card given with standard informations
      * 
-     * @param \Uthmordar\Cardator\Card\lib\iCard $card
+     * @param iCard $card
+     * @param Crawler $crawler
      */
-    public function setGenericCard(\Uthmordar\Cardator\Card\lib\iCard $card, Crawler $crawler) {
+    public function setGenericCard(iCard $card, Crawler $crawler) {
         $crawler->filter('h2')->each(function($node) use($card) {
             $card->name = trim($node->text());
         });

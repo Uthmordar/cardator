@@ -80,10 +80,13 @@ class CardProcessor extends CardContainer {
             return $type;
         } else if (in_array($type, $this->only)) {
             return $type;
-        } else if (in_array($type, $this->except) || !empty($this->only)) {
+        } else if (in_array($type, $this->except)) {
             return false;
         }
-        return $type;
+        if (empty($this->only)) {
+            return $type;
+        }
+        return false;
     }
 
     /**
