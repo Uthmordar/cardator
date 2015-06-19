@@ -23,7 +23,7 @@ use Uthmordar\Cardator\Cardator;
 use Uthmordar\Cardator\Parser\Parser;
 
 try{
-    **$cardator=new Cardator(new CardGenerator, new CardProcessor, new Parser);**
+    $cardator=new Cardator(new CardGenerator, new CardProcessor, new Parser);
 
     /* give only Article type card in output (only has priority over except) */
     $cardator->addOnly('Article');
@@ -32,7 +32,7 @@ try{
     $cardator->addExcept('Thing');
 
     /* choose url to crawl and extract data, throw RuntimeException if header status 400+ */
-    **$crawl=$cardator->crawl('http://google.fr');**
+    $crawl=$cardator->crawl('http://google.fr');
     
     /* given closure will be use on given property for all card during the postprocess */
     $cardator->addPostProcessTreatment('my_property_to_filter', function($name, $value){
@@ -41,10 +41,10 @@ try{
     $cardator->doPostProcess();
     
     /* get cards as json */
-    **$cards=$cardator->getCards(true);**
+    $cards=$cardator->getCards(true);
     
     /* get cards as SplObjectStorage collection */
-    **$cards=$cardator->getCards();**
+    $cards=$cardator->getCards();
     foreach($cards as $c){
         // do something with cards
     }
@@ -80,7 +80,7 @@ You could access some processing informations as follow:
 You could easily create Card object with:
 
 ```
-    **$cardator->createCard('Article');**
+    $cardator->createCard('Article');
 ```
 
 You could change card library by extending CardGenerator and giving a new library namespacing path as long as you respect interface implementation for cards 
@@ -102,21 +102,21 @@ You could change card library by extending CardGenerator and giving a new librar
     $article->params['non-existant'];
 
     // You could access to all hydrated properties name in an array
-    $properties=**$article->properties**;
+    $properties=$article->properties;
 
     // Card type and card hierarchy
-    $cardName=**$article->getQualifiedName()**;
+    $cardName=$article->getQualifiedName();
     $cardType=$article->type;
 
     // Parents : will return an array ['Thing', 'CreativeWork']
     // if more than one parent exist for an item : [['Thing', 'CreativeWork', 'SoftwareApplication'], ['Thing', 'CreativeWork', 'Game']]
-    $cardParents=**$article->getParents()**;
+    $cardParents=$article->getParents();
     OR 
     $cardParents=$article->parents;
     // will return 'Thing\CreativeWork\SoftawareApplication::Thing\CreativeWork\Game'
 
     // Return the direct parent Name
-    $cardDirectParent=**$article->getDirectparent()**;
+    $cardDirectParent=$article->getDirectparent();
 
 ```
 
