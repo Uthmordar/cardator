@@ -113,8 +113,9 @@ class MicroDataCrawler {
             $src = $node->attr('content');
         }
         if ($src != null) {
-            $img = (!strpos($src, '/') && $card->url[strlen($card->url) - 1] !== '/' && strrpos($card->url, '/') > 8) ? substr($card->url, 0, strrpos($card->url, '/') + 1) . $src : $src;
-            $card->$prop = ($img[0] == '/') ? $card->url . $img : $img;
+            $url = (is_array($card->url))? $card->url[0] : $card->url;
+            $img = (!strpos($src, '/') && $url[strlen($card->url) - 1] !== '/' && strrpos($url, '/') > 8) ? substr($url, 0, strrpos($url, '/') + 1) . $src : $src;
+            $card->$prop = ($img[0] == '/') ? $url . $img : $img;
             return true;
         }
     }
@@ -145,8 +146,9 @@ class MicroDataCrawler {
     private function manageLinkProperty(Crawler $node, $prop, iCard $card) {
         if ($node->attr('href')) {
             $href = $node->attr('href');
-            $link = (!strpos($href, '/') && $card->url[strlen($card->url) - 1] !== '/' && strrpos($card->url, '/') > 8) ? substr($card->url, 0, strrpos($card->url, '/') + 1) . $href : $href;
-            $card->$prop = ($link[0] == '/') ? $card->url . $link : $link;
+            $url = (is_array($card->url))? $card->url[0] : $card->url;
+            $link = (!strpos($href, '/') && $url[strlen($url) - 1] !== '/' && strrpos($url, '/') > 8) ? substr($url, 0, strrpos($url, '/') + 1) . $href : $href;
+            $card->$prop = ($link[0] == '/') ? $url . $link : $link;
             return true;
         }
     }
