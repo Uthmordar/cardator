@@ -21,6 +21,7 @@ class Parser implements iParser {
         /** allow https parsing */
         $guzzle = $this->client->getClient();
         $guzzle->setDefaultOption('verify', false);
+        $guzzle->setDefaultOption('cookies', false);
         $this->client->setClient($guzzle);
     }
 
