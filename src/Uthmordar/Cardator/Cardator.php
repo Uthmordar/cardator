@@ -159,7 +159,7 @@ class Cardator {
                 $card->$prop = $cards[$i + $j];
                 $j = ($cards[$i + $j]->child)? $j + $cards[$i + $j]->child : $j+1;
             }else{
-                $j++;
+                $j = ($cards[$i + $j]->child)? $j + $cards[$i + $j]->child : $j+1;
             }
         }
     }
