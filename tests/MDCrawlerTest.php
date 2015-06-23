@@ -97,7 +97,7 @@ class MDCrawlerTest extends \PHPUnit_Framework_TestCase {
         });
 
         $this->assertEquals($this->card->test_src, 'http://test.fr');
-        $this->assertEquals($this->card->image, 'test.fr');
+        $this->assertEquals($this->card->image, '/test.fr');
     }
 
     /**
@@ -121,13 +121,19 @@ class MDCrawlerTest extends \PHPUnit_Framework_TestCase {
     public function testLinkProperty() {
         $html = "<div itemscope itemtype='http://schema.org/Thing'>
             <a href='test.url' itemprop='is_link'>ancre</a>
+            <a href='' itemprop='is_empty'>ancre</a>
+            <a href='test.url#ancre' itemprop='is_ancre'>ancre</a>
+            <a href='?param' itemprop='is_param'>ancre</a>
             </div>";
 
         $cr = new Crawler($html);
         $cr->filter('[itemscope]')->each(function($node) {
             $this->MDCrawler->getScopeContent($node, $this->card, false);
         });
-        $this->assertEquals($this->card->is_link, 'test.url');
+        $this->assertEquals($this->card->is_link, '/test.url');
+        $this->assertEquals($this->card->is_empty, 'ancre');
+        $this->assertEquals($this->card->is_ancre, '/test.url#ancre');
+        $this->assertEquals($this->card->is_param, '?param');
     }
 
     /**

@@ -60,7 +60,9 @@ class MicroDataCrawler {
     private function setCardProperty(Crawler $node, iCard $card, $isItemref = false) {
         $property = $node->attr('itemprop');
         $nd = $node;
-        if ($node->parents()->attr('itemscope') !== null) { return false; }
+        if ($node->parents()->attr('itemscope') !== null) {
+            return false;
+        }
         if ($this->nestedScope($node, $card, $property, $isItemref)) { return true; }
         if ($this->manageRawProperty($node, $property, $card)) { return true; }
         if ($this->manageImgProperty($node, $property, $card)) { return true; }
@@ -113,9 +115,10 @@ class MicroDataCrawler {
             $src = $node->attr('content');
         }
         if ($src != null) {
-            $url = (is_array($card->url))? $card->url[0] : $card->url;
-            $img = (!strpos($src, '/') && $url[strlen($card->url) - 1] !== '/' && strrpos($url, '/') > 8) ? substr($url, 0, strrpos($url, '/') + 1) . $src : $src;
-            $card->$prop = ($img[0] == '/') ? $url . $img : $img;
+            $url = (is_array($card->url)) ? $card->url[0] : $card->url;
+            $card->$prop = $this->getUri($src, $url);
+            /*$img = (!strpos($src, '/') && $url[strlen($card->url) - 1] !== '/' && strrpos($url, '/') > 8 && !filter_var($src, FILTER_VALIDATE_URL)) ? substr($url, 0, strrpos($url, '/') + 1) . $src : $src;
+            $card->$prop = ($img[0] == '/') ? $url . $img : $img;*/
             return true;
         }
     }
@@ -146,11 +149,121 @@ class MicroDataCrawler {
     private function manageLinkProperty(Crawler $node, $prop, iCard $card) {
         if ($node->attr('href')) {
             $href = $node->attr('href');
-            $url = (is_array($card->url))? $card->url[0] : $card->url;
-            $link = (!strpos($href, '/') && $url[strlen($url) - 1] !== '/' && strrpos($url, '/') > 8) ? substr($url, 0, strrpos($url, '/') + 1) . $href : $href;
-            $card->$prop = ($link[0] == '/') ? $url . $link : $link;
+            $url = (is_array($card->url)) ? $card->url[0] : $card->url;
+            $card->$prop = $this->getUri($href, $url);
+            /* $url = (is_array($card->url))? $card->url[0] : $card->url;
+              $link = (!strpos($href, '/') && $url[strlen($url) - 1] !== '/' && strrpos($url, '/') > 8 && !filter_var($href, FILTER_VALIDATE_URL)) ? substr($url, 0, strrpos($url, '/') + 1) . $href : $href;
+              $card->$prop = ($link[0] == '/') ? $url . $link : $link; */
             return true;
         }
+    }
+
+    /**
+     * 
+     * @param type $uri
+     * @param type $current
+     * @return type
+     */
+    protected function getUri($uri, $current) {
+
+        if (null !== parse_url($uri, PHP_URL_SCHEME)) {
+            return $uri;
+        }
+
+        if (!$uri) {
+            return $current;
+        }
+
+        if ('#' === $uri[0]) {
+            return $this->cleanupAnchor($current) . $uri;
+        }
+
+        $baseUri = $this->cleanupUri($current);
+
+        if ('?' === $uri[0]) {
+            return $baseUri . $uri;
+        }
+
+        if (0 === strpos($uri, '//')) {
+            return preg_replace('#^([^/]*)//.*$#', '$1', $baseUri) . $uri;
+        }
+
+        $baseUri = preg_replace('#^(.*?//[^/]*)(?:\/.*)?$#', '$1', $baseUri);
+
+        if ('/' === $uri[0]) {
+            return $baseUri . $uri;
+        }
+
+        $path = parse_url(substr($current, strlen($baseUri)), PHP_URL_PATH);
+        $path = $this->canonicalizePath(substr($path, 0, strrpos($path, '/')) . '/' . $uri);
+
+        return $baseUri . ('' === $path || '/' !== $path[0] ? '/' : '') . $path;
+    }
+
+    /**
+     * Returns the canonicalized URI path (see RFC 3986, section 5.2.4).
+     *
+     * @param string $path URI path
+     * @return string
+     */
+    protected function canonicalizePath($path) {
+        if ('' === $path || '/' === $path) {
+            return $path;
+        }
+
+        if ('.' === substr($path, -1)) {
+            $path .= '/';
+        }
+
+        $output = array();
+
+        foreach (explode('/', $path) as $segment) {
+            if ('..' === $segment) {
+                array_pop($output);
+            } elseif ('.' !== $segment) {
+                $output[] = $segment;
+            }
+        }
+
+        return implode('/', $output);
+    }
+
+    /**
+     * Removes the query string and the anchor from the given uri.
+     *
+     * @param string $uri The uri to clean
+     * @return string
+     */
+    protected function cleanupUri($uri) {
+        return $this->cleanupQuery($this->cleanupAnchor($uri));
+    }
+
+    /**
+     * Remove the query string from the uri.
+     *
+     * @param string $uri
+     * @return string
+     */
+    protected function cleanupQuery($uri) {
+        if (false !== $pos = strpos($uri, '?')) {
+            return substr($uri, 0, $pos);
+        }
+
+        return $uri;
+    }
+
+    /**
+     * Remove the anchor from the uri.
+     *
+     * @param string $uri
+     * @return string
+     */
+    protected function cleanupAnchor($uri) {
+        if (false !== $pos = strpos($uri, '#')) {
+            return substr($uri, 0, $pos);
+        }
+
+        return $uri;
     }
 
     /**
