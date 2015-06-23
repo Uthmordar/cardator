@@ -13,7 +13,7 @@ class Cardator {
     private $totalCard;
     private $status;
     private $executionTime;
-    private $childArray;
+    public $childArray;
 
     public function __construct(Card\iCardatorGenerator $generator, Card\iCardatorContainer $container, Parser\iParser $parser) {
         $this->generator = $generator;
@@ -154,11 +154,12 @@ class Cardator {
      */
     private function setRelationship(Card\lib\iCard $card, $i, $cards) {
         $j = 1;
-        foreach ($card->childList as $prop) {
+        for ($k=0; $k<count($card->childList); $k++){
             if(in_array($cards[$i + $j], $this->childArray)){
-                $card->$prop = $cards[$i + $j];
+                $card->{$card->childList[$k]} = $cards[ $i + $j ];
                 $j = ($cards[$i + $j]->child)? $j + $cards[$i + $j]->child : $j+1;
             }else{
+                $k=$k-1;
                 $j = ($cards[$i + $j]->child)? $j + $cards[$i + $j]->child : $j+1;
             }
         }
