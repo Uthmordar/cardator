@@ -177,6 +177,16 @@ class CardatorTest extends \PHPUnit_Framework_TestCase {
      */
     public function testCrawlGlobal() {
         $cardator = new Cardator(new CardGenerator, new CardProcessor, new Parser);
+        $cardator->crawl('http://www.imdb.com/title/tt0369610/');
+        $cards = $cardator->getCards(true);
+        $this->assertTrue(is_string($cards));
+
+        $this->assertTrue(is_int($cardator->getTotalCard()));
+        $this->assertEquals($cardator->getTotalCard(), count($cardator->getCards()));
+        $this->assertTrue(is_int($cardator->getStatus()));
+        $this->assertTrue(is_float($cardator->getExecutionTime()));
+        $this->assertTrue(is_array($cardator->getExecutionData()));
+        
         $cardator->crawl('http://test.tanguygodin.fr/test.html');
         $cards = $cardator->getCards(true);
         $this->assertTrue(is_string($cards));

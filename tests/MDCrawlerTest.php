@@ -146,7 +146,7 @@ class MDCrawlerTest extends \PHPUnit_Framework_TestCase {
 
         $this->assertEquals($this->card->childList, ['subcard']);
     }
-
+    
     /**
      * test extract nested card by itemref && generation of approprieted subcard
      * @dataProvider providerNestedScope

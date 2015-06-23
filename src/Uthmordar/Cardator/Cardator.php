@@ -13,6 +13,7 @@ class Cardator {
     private $totalCard;
     private $status;
     private $executionTime;
+    private $childArray;
 
     public function __construct(Card\iCardatorGenerator $generator, Card\iCardatorContainer $container, Parser\iParser $parser) {
         $this->generator = $generator;
@@ -106,6 +107,9 @@ class Cardator {
             } catch (\RuntimeException $e) {
                 $card = $this->createCard('Thing');
             }
+            if($node->attr('itemprop')){
+                $this->childArray[]=$card;
+            }
             $card->child = count($node->filter('[itemscope]')) - 1;
             $card->url = $url;
 
@@ -151,8 +155,12 @@ class Cardator {
     private function setRelationship(Card\lib\iCard $card, $i, $cards) {
         $j = 1;
         foreach ($card->childList as $prop) {
-            $card->$prop = $cards[$i + $j];
-            $j = $j + $cards[$i + $j]->child;
+            if(in_array($cards[$i + $j], $this->childArray)){
+                $card->$prop = $cards[$i + $j];
+                $j = ($cards[$i + $j]->child)? $j + $cards[$i + $j]->child : $j+1;
+            }else{
+                $j++;
+            }
         }
     }
 
