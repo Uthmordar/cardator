@@ -2,8 +2,9 @@
 
 namespace Uthmordar\Cardator\Card\lib;
 
-class Clip extends CreativeWork{
-    protected $parents="Thing\CreativeWork";
+class Clip extends CreativeWork {
+
+    protected $parents = "Thing\CreativeWork";
     protected $actor;
     protected $clipNumber;
     protected $director;
@@ -11,5 +12,6 @@ class Clip extends CreativeWork{
     protected $partOfEpisode;
     protected $partOfSeason;
     protected $partOfSeries;
-    protected $type="http://schema.org/Clip";
+    protected $type = "http://schema.org/Clip";
+
 }

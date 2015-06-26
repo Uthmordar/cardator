@@ -2,9 +2,11 @@
 
 namespace Uthmordar\Cardator\Card\lib;
 
-class TradeAction extends Action{
-    protected $parents="Thing\Action";
+class TradeAction extends Action {
+
+    protected $parents = "Thing\Action";
     protected $price;
     protected $priceSpecification;
-    protected $type="http://schema.org/TradeAction";
+    protected $type = "http://schema.org/TradeAction";
+
 }

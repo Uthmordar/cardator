@@ -2,8 +2,9 @@
 
 namespace Uthmordar\Cardator\Card\lib;
 
-class VideoGameSeries extends CreativeWorkSeries{
-    protected $parents="Thing\CreativeWork\CreativeWorkSeries";
+class VideoGameSeries extends CreativeWorkSeries {
+
+    protected $parents = "Thing\CreativeWork\CreativeWorkSeries";
     protected $actor;
     protected $characterAttribute;
     protected $cheatCode;
@@ -21,5 +22,6 @@ class VideoGameSeries extends CreativeWorkSeries{
     protected $productionCompany;
     protected $quest;
     protected $trailer;
-    protected $type="http://schema.org/VideoGameSeries";
+    protected $type = "http://schema.org/VideoGameSeries";
+
 }

@@ -2,8 +2,9 @@
 
 namespace Uthmordar\Cardator\Card\lib;
 
-class CreativeWork extends Thing{
-    protected $parents="Thing";
+class CreativeWork extends Thing {
+
+    protected $parents = "Thing";
     protected $about;
     protected $accessibilityAPI;
     protected $accessibilityControl;
@@ -69,5 +70,6 @@ class CreativeWork extends Thing{
     protected $version;
     protected $video;
     protected $workExample;
-    protected $type="http://schema.org/CreativeWork";
+    protected $type = "http://schema.org/CreativeWork";
+
 }

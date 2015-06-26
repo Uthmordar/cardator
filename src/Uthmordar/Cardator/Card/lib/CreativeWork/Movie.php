@@ -2,8 +2,9 @@
 
 namespace Uthmordar\Cardator\Card\lib;
 
-class Movie extends CreativeWork{
-    protected $parents="Thing\CreativeWork";
+class Movie extends CreativeWork {
+
+    protected $parents = "Thing\CreativeWork";
     protected $actor;
     protected $director;
     protected $duration;
@@ -11,5 +12,6 @@ class Movie extends CreativeWork{
     protected $productionCompany;
     protected $subtitleLanguage;
     protected $trailer;
-    protected $type="http://schema.org/Movie";
+    protected $type = "http://schema.org/Movie";
+
 }

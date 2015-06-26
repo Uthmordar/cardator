@@ -2,8 +2,9 @@
 
 namespace Uthmordar\Cardator\Card\lib;
 
-class PriceSpecification extends StructuredValue{
-    protected $parents="Thing\Intangible\StructuredValue";
+class PriceSpecification extends StructuredValue {
+
+    protected $parents = "Thing\Intangible\StructuredValue";
     protected $eligibleQuantity;
     protected $eligibleTransactionVolume;
     protected $maxPrice;
@@ -13,11 +14,12 @@ class PriceSpecification extends StructuredValue{
     protected $validFrom;
     protected $validThrough;
     protected $valueAddedTaxIncluded;
-    protected $type="http://schema.org/PriceSpecification";
-    
-    public function __construct(){
+    protected $type = "http://schema.org/PriceSpecification";
+
+    public function __construct() {
         parent::__construct();
         $this->addFilter('validFrom', 'filterDateTime');
         $this->addFilter('validThrough', 'filterDateTime');
     }
+
 }

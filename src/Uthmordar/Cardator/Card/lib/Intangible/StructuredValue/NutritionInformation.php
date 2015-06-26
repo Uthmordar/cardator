@@ -2,8 +2,9 @@
 
 namespace Uthmordar\Cardator\Card\lib;
 
-class NutritionInformation extends StructuredValue{
-    protected $parents="Thing\Intangible\StructuredValue";
+class NutritionInformation extends StructuredValue {
+
+    protected $parents = "Thing\Intangible\StructuredValue";
     protected $calories;
     protected $carbohydrateContent;
     protected $cholesterolContent;
@@ -16,5 +17,6 @@ class NutritionInformation extends StructuredValue{
     protected $sugarContent;
     protected $transFatContent;
     protected $unsaturatedFatContent;
-    protected $type="http://schema.org/NutritionInformation";
+    protected $type = "http://schema.org/NutritionInformation";
+
 }

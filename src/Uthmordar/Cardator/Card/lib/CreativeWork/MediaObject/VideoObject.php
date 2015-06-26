@@ -2,8 +2,9 @@
 
 namespace Uthmordar\Cardator\Card\lib;
 
-class VideoObject extends MediaObject{
-    protected $parents="Thing\CreativeWork\MediaObject";
+class VideoObject extends MediaObject {
+
+    protected $parents = "Thing\CreativeWork\MediaObject";
     protected $actor;
     protected $captor;
     protected $director;
@@ -12,5 +13,6 @@ class VideoObject extends MediaObject{
     protected $transcript;
     protected $videoFrameSize;
     protected $videoQuality;
-    protected $type="http://schema.org/VideoObject";
+    protected $type = "http://schema.org/VideoObject";
+
 }

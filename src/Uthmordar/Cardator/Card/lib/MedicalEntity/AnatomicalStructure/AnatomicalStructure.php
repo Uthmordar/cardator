@@ -2,8 +2,9 @@
 
 namespace Uthmordar\Cardator\Card\lib;
 
-class AnatomicalStructure extends MedicalEntity{
-    protected $parents="Thing\MedicalEntity";
+class AnatomicalStructure extends MedicalEntity {
+
+    protected $parents = "Thing\MedicalEntity";
     protected $associatedPathophysiology;
     protected $bodyLocation;
     protected $connectedTo;
@@ -13,5 +14,6 @@ class AnatomicalStructure extends MedicalEntity{
     protected $relatedCondition;
     protected $relatedTherapy;
     protected $subStructure;
-    protected $type="http://schema.org/AnatomicalStructure";
+    protected $type = "http://schema.org/AnatomicalStructure";
+
 }

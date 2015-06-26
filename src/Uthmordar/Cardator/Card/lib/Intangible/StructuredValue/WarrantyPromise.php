@@ -2,9 +2,11 @@
 
 namespace Uthmordar\Cardator\Card\lib;
 
-class WarrantyPromise extends StructuredValue{
-    protected $parents="Thing\Intangible\StructuredValue";
+class WarrantyPromise extends StructuredValue {
+
+    protected $parents = "Thing\Intangible\StructuredValue";
     protected $durationOfWarranty;
     protected $warrantyScope;
-    protected $type="http://schema.org/WarrantyPromise";
+    protected $type = "http://schema.org/WarrantyPromise";
+
 }

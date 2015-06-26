@@ -2,8 +2,9 @@
 
 namespace Uthmordar\Cardator\Card\lib;
 
-class CableOrSatelliteService extends Service{
-    protected $parents="Thing\Intangible\Service";
+class CableOrSatelliteService extends Service {
+
+    protected $parents = "Thing\Intangible\Service";
     protected $aggregateRating;
     protected $availableChannel;
     protected $provider;
@@ -11,5 +12,6 @@ class CableOrSatelliteService extends Service{
     protected $serviceArea;
     protected $serviceOutput;
     protected $serviceType;
-    protected $type="http://schema.org/CableOrSatelliteService";
+    protected $type = "http://schema.org/CableOrSatelliteService";
+
 }

@@ -38,7 +38,7 @@ class CardatorTest extends \PHPUnit_Framework_TestCase {
      */
     public function testCardIsInstanceOfiCard() {
         $card = $this->cardator->createCard('Thing');
-        $this->assertTrue($card instanceof \Uthmordar\Cardator\Card\lib\iCard);
+        $this->assertTrue($card instanceof \Uthmordar\Cardator\Card\lib\CardInterface);
 
         return $card;
     }

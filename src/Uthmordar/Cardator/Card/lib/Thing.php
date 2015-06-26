@@ -6,7 +6,7 @@ namespace Uthmordar\Cardator\Card\lib;
  * default car class
  * regroup properties and access to them with __get, __set and __call
  */
-class Thing extends FilterCard implements iCard {
+class Thing extends FilterCard implements CardInterface {
 
     protected $child = 0;
     protected $childList = [];
@@ -42,7 +42,7 @@ class Thing extends FilterCard implements iCard {
 
     public function __call($name, $arguments) {
         if (!empty($arguments)) {
-            if (!empty($arguments[0]['replace']) && !empty($arguments[0]['replace']) == true) {
+            if (!empty($arguments[0]['replace']) && !empty($arguments[0]['replace']) === true) {
                 return $this->replaceCardProperty($name, $arguments[0]['filtered']);
             }
             return $this->setCardProperty($name, $arguments[0]);
@@ -129,7 +129,6 @@ class Thing extends FilterCard implements iCard {
             return $this->params[$name];
         }
         return null;
-        //throw new \RuntimeException("Undefined property $name for {$this->getQualifiedName()}");
     }
 
     /**

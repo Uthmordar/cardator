@@ -2,8 +2,9 @@
 
 namespace Uthmordar\Cardator\Card\lib;
 
-class Vehicle extends Product{
-    protected $parents="Thing\Product";
+class Vehicle extends Product {
+
+    protected $parents = "Thing\Product";
     protected $cargoVolume;
     protected $dateVehicleFirstRegistered;
     protected $driveWheelConfiguration;
@@ -28,5 +29,6 @@ class Vehicle extends Product{
     protected $vehicleModelDate;
     protected $vehicleSeatingCapacity;
     protected $vehicleTransmission;
-    protected $type="http://schema.org/Vehicle";
+    protected $type = "http://schema.org/Vehicle";
+
 }

@@ -2,8 +2,9 @@
 
 namespace Uthmordar\Cardator\Card\lib;
 
-class Drug extends MedicalTherapy{
-    protected $parents="Thing\MedicalEntity\MedicalTherapy";
+class Drug extends MedicalTherapy {
+
+    protected $parents = "Thing\MedicalEntity\MedicalTherapy";
     protected $activeIngredient;
     protected $administrationRoute;
     protected $alcoholWarning;
@@ -30,5 +31,6 @@ class Drug extends MedicalTherapy{
     protected $presciptionStatus;
     protected $relatedDrug;
     protected $warning;
-    protected $type="http://schema.org/Drug";
+    protected $type = "http://schema.org/Drug";
+
 }

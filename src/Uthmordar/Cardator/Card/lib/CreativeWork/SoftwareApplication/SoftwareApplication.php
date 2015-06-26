@@ -2,8 +2,9 @@
 
 namespace Uthmordar\Cardator\Card\lib;
 
-class SoftwareApplication extends CreativeWork{
-    protected $parents="Thing\CreativeWork";
+class SoftwareApplication extends CreativeWork {
+
+    protected $parents = "Thing\CreativeWork";
     protected $applicationCategory;
     protected $applicationSubCategory;
     protected $applicationSuite;
@@ -26,5 +27,6 @@ class SoftwareApplication extends CreativeWork{
     protected $softwareRequirements;
     protected $softwareVersion;
     protected $storageRequirements;
-    protected $type="http://schema.org/SoftwareApplication";
+    protected $type = "http://schema.org/SoftwareApplication";
+
 }

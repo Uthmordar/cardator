@@ -2,8 +2,9 @@
 
 namespace Uthmordar\Cardator\Card\lib;
 
-class Demand extends Intangible{
-    protected $parents="Thing\Intangible";
+class Demand extends Intangible {
+
+    protected $parents = "Thing\Intangible";
     protected $acceptedPaymentMethod;
     protected $advanceBookingRequirement;
     protected $availability;
@@ -35,5 +36,6 @@ class Demand extends Intangible{
     protected $validFrom;
     protected $validThrough;
     protected $warranty;
-    protected $type="http://schema.org/Demand";
+    protected $type = "http://schema.org/Demand";
+
 }

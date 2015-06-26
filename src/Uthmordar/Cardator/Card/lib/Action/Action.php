@@ -2,8 +2,9 @@
 
 namespace Uthmordar\Cardator\Card\lib;
 
-class Action extends Thing{
-    protected $parents="Thing";
+class Action extends Thing {
+
+    protected $parents = "Thing";
     protected $actionStatus;
     protected $agent;
     protected $endTime;
@@ -15,5 +16,6 @@ class Action extends Thing{
     protected $result;
     protected $startTime;
     protected $target;
-    protected $type="http://schema.org/Action";
+    protected $type = "http://schema.org/Action";
+
 }

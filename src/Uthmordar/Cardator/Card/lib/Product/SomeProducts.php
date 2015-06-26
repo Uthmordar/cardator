@@ -2,8 +2,10 @@
 
 namespace Uthmordar\Cardator\Card\lib;
 
-class SomeProducts extends Product{
-    protected $parents="Thing\Product";
+class SomeProducts extends Product {
+
+    protected $parents = "Thing\Product";
     protected $inventoryLevel;
-    protected $type="http://schema.org/SomeProducts";
+    protected $type = "http://schema.org/SomeProducts";
+
 }

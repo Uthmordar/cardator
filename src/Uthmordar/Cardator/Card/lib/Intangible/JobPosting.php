@@ -2,8 +2,9 @@
 
 namespace Uthmordar\Cardator\Card\lib;
 
-class JobPosting extends Intangible{
-    protected $parents="Thing\Intangible";
+class JobPosting extends Intangible {
+
+    protected $parents = "Thing\Intangible";
     protected $baseSalary;
     protected $datePosted;
     protected $educationRequirements;
@@ -22,5 +23,6 @@ class JobPosting extends Intangible{
     protected $specialCommitments;
     protected $title;
     protected $workHours;
-    protected $type="http://schema.org/JobPosting";
+    protected $type = "http://schema.org/JobPosting";
+
 }

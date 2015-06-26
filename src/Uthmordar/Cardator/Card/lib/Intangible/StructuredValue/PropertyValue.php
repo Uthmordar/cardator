@@ -2,8 +2,9 @@
 
 namespace Uthmordar\Cardator\Card\lib;
 
-class PropertyValue extends StructuredValue{
-    protected $parents="Thing\Intangible\StructuredValue";
+class PropertyValue extends StructuredValue {
+
+    protected $parents = "Thing\Intangible\StructuredValue";
     protected $maxValue;
     protected $minValue;
     protected $propertyID;
@@ -11,5 +12,6 @@ class PropertyValue extends StructuredValue{
     protected $unitText;
     protected $value;
     protected $valueReference;
-    protected $type="http://schema.org/PropertyValue";
+    protected $type = "http://schema.org/PropertyValue";
+
 }

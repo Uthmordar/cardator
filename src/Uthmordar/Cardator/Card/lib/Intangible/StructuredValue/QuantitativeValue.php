@@ -2,8 +2,9 @@
 
 namespace Uthmordar\Cardator\Card\lib;
 
-class QuantitativeValue extends StructuredValue{
-    protected $parents="Thing\Intangible\StructuredValue";
+class QuantitativeValue extends StructuredValue {
+
+    protected $parents = "Thing\Intangible\StructuredValue";
     protected $additionalProperty;
     protected $maxValue;
     protected $minValue;
@@ -11,5 +12,6 @@ class QuantitativeValue extends StructuredValue{
     protected $unitText;
     protected $value;
     protected $valueReference;
-    protected $type="http://schema.org/QuantitativeValue";
+    protected $type = "http://schema.org/QuantitativeValue";
+
 }

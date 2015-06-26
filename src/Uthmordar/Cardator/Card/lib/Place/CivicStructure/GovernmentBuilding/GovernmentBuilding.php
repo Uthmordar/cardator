@@ -2,7 +2,9 @@
 
 namespace Uthmordar\Cardator\Card\lib;
 
-class GovernmentBuilding extends CivicStructure{
-    protected $parents="Thing\Place\CivicStructure";
-    protected $type="http://schema.org/GovernmentBuilding";
+class GovernmentBuilding extends CivicStructure {
+
+    protected $parents = "Thing\Place\CivicStructure";
+    protected $type = "http://schema.org/GovernmentBuilding";
+
 }

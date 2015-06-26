@@ -2,8 +2,10 @@
 
 namespace Uthmordar\Cardator\Card\lib;
 
-class WinAction extends AchieveAction{
-    protected $parents="Thing\Action\AchieveAction";
+class WinAction extends AchieveAction {
+
+    protected $parents = "Thing\Action\AchieveAction";
     protected $loser;
-    protected $type="http://schema.org/WinAction";
+    protected $type = "http://schema.org/WinAction";
+
 }

@@ -2,8 +2,10 @@
 
 namespace Uthmordar\Cardator\Card\lib;
 
-class Corporation extends Organization{
-    protected $parents="Thing\Organization";
+class Corporation extends Organization {
+
+    protected $parents = "Thing\Organization";
     protected $tickerSymbol;
-    protected $type="http://schema.org/Corporation";
+    protected $type = "http://schema.org/Corporation";
+
 }

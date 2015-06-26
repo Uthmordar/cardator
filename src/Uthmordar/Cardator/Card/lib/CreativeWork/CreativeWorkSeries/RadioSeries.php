@@ -2,8 +2,9 @@
 
 namespace Uthmordar\Cardator\Card\lib;
 
-class RadioSeries extends CreativeWorkSeries{
-    protected $parents="Thing\CreativeWork\CreativeWorkSeries";
+class RadioSeries extends CreativeWorkSeries {
+
+    protected $parents = "Thing\CreativeWork\CreativeWorkSeries";
     protected $actor;
     protected $containsSeason;
     protected $director;
@@ -13,5 +14,6 @@ class RadioSeries extends CreativeWorkSeries{
     protected $numberOfSeasons;
     protected $productionCompany;
     protected $trailer;
-    protected $type="http://schema.org/RadioSeries";
+    protected $type = "http://schema.org/RadioSeries";
+
 }

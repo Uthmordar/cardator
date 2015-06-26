@@ -36,7 +36,7 @@ class CardProcessorTest extends \PHPUnit_Framework_TestCase {
     public function testGetNonFilterCards($container) {
         $cards = $container->getNonFilterCards();
         foreach ($cards as $card) {
-            $this->assertTrue($card instanceof \Uthmordar\Cardator\Card\lib\iCard);
+            $this->assertTrue($card instanceof \Uthmordar\Cardator\Card\lib\CardInterface);
         }
         $this->assertEquals(2, count($cards));
     }

@@ -2,8 +2,9 @@
 
 namespace Uthmordar\Cardator\Card\lib;
 
-class ExerciseAction extends PlayAction{
-    protected $parents="Thing\Action\PlayAction";
+class ExerciseAction extends PlayAction {
+
+    protected $parents = "Thing\Action\PlayAction";
     protected $distance;
     protected $exerciseCourse;
     protected $exercisePlan;
@@ -15,5 +16,6 @@ class ExerciseAction extends PlayAction{
     protected $sportsEvent;
     protected $sportsTeam;
     protected $toLocation;
-    protected $type="http://schema.org/ExerciseAction";
+    protected $type = "http://schema.org/ExerciseAction";
+
 }

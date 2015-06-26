@@ -2,8 +2,10 @@
 
 namespace Uthmordar\Cardator\Card\lib;
 
-class TelevisionStation extends LocalBusiness{
-    protected $parents="Thing\Organization\LocalBusiness";
+class TelevisionStation extends LocalBusiness {
+
+    protected $parents = "Thing\Organization\LocalBusiness";
     protected $videoFormat;
-    protected $type="http://schema.org/TelevisionStation";
+    protected $type = "http://schema.org/TelevisionStation";
+
 }

@@ -2,7 +2,9 @@
 
 namespace Uthmordar\Cardator\Card\lib;
 
-class AutoDealer extends AutomotiveBusiness{
-    protected $parents="Thing\Organization\LocalBusiness\AutomotiveBusiness";
-    protected $type="http://schema.org/AutoDealer";
+class AutoDealer extends AutomotiveBusiness {
+
+    protected $parents = "Thing\Organization\LocalBusiness\AutomotiveBusiness";
+    protected $type = "http://schema.org/AutoDealer";
+
 }

@@ -2,7 +2,9 @@
 
 namespace Uthmordar\Cardator\Card\lib;
 
-class FinancialService extends LocalBusiness{
-    protected $parents="Thing\Organization\LocalBusiness";
-    protected $type="http://schema.org/FinancialService";
+class FinancialService extends LocalBusiness {
+
+    protected $parents = "Thing\Organization\LocalBusiness";
+    protected $type = "http://schema.org/FinancialService";
+
 }

@@ -119,7 +119,7 @@ class CardProcessor extends CardContainer {
      * @param Closure $closure
      * @return boolean
      */
-    public function applyFilterOnProperty(lib\iCard $card, $prop, \Closure $closure) {
+    public function applyFilterOnProperty(lib\CardInterface $card, $prop, \Closure $closure) {
         try {
             $card->$prop(['filtered' => $this->getFilterResultOnProperty($card, $prop, $closure), 'replace' => true]);
         } catch (\RuntimeException $e) {
@@ -135,7 +135,7 @@ class CardProcessor extends CardContainer {
      * @param Closure $closure
      * @return string or array
      */
-    public function getFilterResultOnProperty(lib\iCard $card, $prop, \Closure $closure) {
+    public function getFilterResultOnProperty(lib\CardInterface $card, $prop, \Closure $closure) {
         if (is_array($card->$prop)) {
             $r = [];
             foreach ($card->$prop as $k => $p) {
@@ -166,7 +166,7 @@ class CardProcessor extends CardContainer {
      * @param \Uthmordar\Cardator\Card\lib\iCard $card
      * @return array
      */
-    public function createArrayCard(lib\iCard $card) {
+    public function createArrayCard(lib\CardInterface $card) {
         $array = [
             'type' => $card->type,
             'class' => $card->getQualifiedName()
@@ -185,7 +185,7 @@ class CardProcessor extends CardContainer {
      * @param array $array
      * @return type
      */
-    public function formatProperties(lib\iCard $card, $property, array $array) {
+    public function formatProperties(lib\CardInterface $card, $property, array $array) {
         if (is_array($card->$property)) {
             foreach ($card->$property as $p) {
                 $array[$property][] = (is_string($p)) ? utf8_encode($this->formatToJsonCardProperties($p)) : $this->formatToJsonCardProperties($p);
@@ -206,7 +206,7 @@ class CardProcessor extends CardContainer {
         if ($propertyValue instanceof \DateTime) {
             return $propertyValue->getTimestamp();
         }
-        if ($propertyValue instanceof lib\iCard) {
+        if ($propertyValue instanceof lib\CardInterface) {
             return $this->createArrayCard($propertyValue);
         }
         return $propertyValue;

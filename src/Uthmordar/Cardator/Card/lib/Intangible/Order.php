@@ -2,8 +2,9 @@
 
 namespace Uthmordar\Cardator\Card\lib;
 
-class Order extends Intangible{
-    protected $parents="Thing\Intangible";
+class Order extends Intangible {
+
+    protected $parents = "Thing\Intangible";
     protected $acceptedOffer;
     protected $billingAddress;
     protected $broker;
@@ -24,11 +25,12 @@ class Order extends Intangible{
     protected $paymentMethodId;
     protected $paymentUrl;
     protected $seller;
-    protected $type="http://schema.org/Order";
-    
-    public function __construct(){
+    protected $type = "http://schema.org/Order";
+
+    public function __construct() {
         parent::__construct();
         $this->addFilter('orderDate', 'filterDateTime');
         $this->addFilter('paymentDue', 'filterDateTime');
     }
+
 }

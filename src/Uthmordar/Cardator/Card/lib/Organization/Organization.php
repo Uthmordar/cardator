@@ -2,8 +2,9 @@
 
 namespace Uthmordar\Cardator\Card\lib;
 
-class Organization extends Thing{
-    protected $parents="Thing";
+class Organization extends Thing {
+
+    protected $parents = "Thing";
     protected $address;
     protected $aggregateRating;
     protected $award;
@@ -37,5 +38,6 @@ class Organization extends Thing{
     protected $taxID;
     protected $telephone;
     protected $vatID;
-    protected $type="http://schema.org/Organization";
+    protected $type = "http://schema.org/Organization";
+
 }

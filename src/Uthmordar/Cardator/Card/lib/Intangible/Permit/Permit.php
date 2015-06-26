@@ -2,8 +2,9 @@
 
 namespace Uthmordar\Cardator\Card\lib;
 
-class Permit extends Intangible{
-    protected $parents="Thing\Intangible";
+class Permit extends Intangible {
+
+    protected $parents = "Thing\Intangible";
     protected $issuedBy;
     protected $issuedThrough;
     protected $permitAudience;
@@ -11,5 +12,6 @@ class Permit extends Intangible{
     protected $validFrom;
     protected $validIn;
     protected $validUntil;
-    protected $type="http://schema.org/Permit";
+    protected $type = "http://schema.org/Permit";
+
 }

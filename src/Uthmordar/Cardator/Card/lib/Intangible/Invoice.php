@@ -2,8 +2,9 @@
 
 namespace Uthmordar\Cardator\Card\lib;
 
-class Invoice extends Intangible{
-    protected $parents="Thing\Intangible";
+class Invoice extends Intangible {
+
+    protected $parents = "Thing\Intangible";
     protected $accountId;
     protected $billingPeriod;
     protected $broker;
@@ -19,5 +20,6 @@ class Invoice extends Intangible{
     protected $referencesOrder;
     protected $scheduledPaymentDate;
     protected $totalPaymentDue;
-    protected $type="http://schema.org/Invoice";
+    protected $type = "http://schema.org/Invoice";
+
 }

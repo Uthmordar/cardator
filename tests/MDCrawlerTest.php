@@ -162,7 +162,7 @@ class MDCrawlerTest extends \PHPUnit_Framework_TestCase {
         $cr->filter('[itemscope]')->each(function($node) use($cr) {
             $this->MDCrawler->manageItemrefProperty($node, $this->card, $cr);
         });
-        $this->assertTrue($this->card->nested instanceof \Uthmordar\Cardator\Card\lib\iCard);
+        $this->assertTrue($this->card->nested instanceof \Uthmordar\Cardator\Card\lib\CardInterface);
     }
 
     public function providerNestedScope() {

@@ -2,7 +2,9 @@
 
 namespace Uthmordar\Cardator\Card\lib;
 
-class ReadAction extends ConsumeAction{
-    protected $parents="Thing\Action\ConsumeAction";
-    protected $type="http://schema.org/ReadAction";
+class ReadAction extends ConsumeAction {
+
+    protected $parents = "Thing\Action\ConsumeAction";
+    protected $type = "http://schema.org/ReadAction";
+
 }

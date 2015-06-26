@@ -2,8 +2,9 @@
 
 namespace Uthmordar\Cardator\Card\lib;
 
-class Episode extends CreativeWork{
-    protected $parents="Thing\CreativeWork";
+class Episode extends CreativeWork {
+
+    protected $parents = "Thing\CreativeWork";
     protected $actor;
     protected $director;
     protected $episodeNumber;
@@ -12,5 +13,6 @@ class Episode extends CreativeWork{
     protected $partOfSeries;
     protected $productionCompany;
     protected $trailer;
-    protected $type="http://schema.org/Episode";
+    protected $type = "http://schema.org/Episode";
+
 }

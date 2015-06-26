@@ -2,8 +2,9 @@
 
 namespace Uthmordar\Cardator\Card\lib;
 
-class MedicalCondition extends MedicalEntity{
-    protected $parents="Thing\MedicalEntity";
+class MedicalCondition extends MedicalEntity {
+
+    protected $parents = "Thing\MedicalEntity";
     protected $associatedAnatomy;
     protected $cause;
     protected $differentialDiagnosis;
@@ -20,5 +21,6 @@ class MedicalCondition extends MedicalEntity{
     protected $stage;
     protected $subtype;
     protected $typicalTest;
-    protected $type="http://schema.org/MedicalCondition";
+    protected $type = "http://schema.org/MedicalCondition";
+
 }

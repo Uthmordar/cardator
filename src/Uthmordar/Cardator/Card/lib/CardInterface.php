@@ -2,7 +2,7 @@
 
 namespace Uthmordar\Cardator\Card\lib;
 
-interface iCard {
+interface CardInterface {
 
     public function __get($name);
 

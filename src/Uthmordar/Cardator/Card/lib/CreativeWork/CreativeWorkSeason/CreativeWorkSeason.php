@@ -2,8 +2,9 @@
 
 namespace Uthmordar\Cardator\Card\lib;
 
-class CreativeWorkSeason extends CreativeWork{
-    protected $parents="Thing\CreativeWork";
+class CreativeWorkSeason extends CreativeWork {
+
+    protected $parents = "Thing\CreativeWork";
     protected $actor;
     protected $director;
     protected $endDate;
@@ -14,5 +15,6 @@ class CreativeWorkSeason extends CreativeWork{
     protected $seasonNumber;
     protected $startDate;
     protected $trailer;
-    protected $type="http://schema.org/CreativeWorkSeason";
+    protected $type = "http://schema.org/CreativeWorkSeason";
+
 }

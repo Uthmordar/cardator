@@ -2,8 +2,9 @@
 
 namespace Uthmordar\Cardator\Card\lib;
 
-class LocalBusiness extends Organization{
-    protected $parents="Thing\Organization::Thing\Place";
+class LocalBusiness extends Organization {
+
+    protected $parents = "Thing\Organization::Thing\Place";
     protected $currenciesAccepted;
     protected $openingHours;
     protected $parentOrganization;
@@ -24,5 +25,6 @@ class LocalBusiness extends Organization{
     protected $photo;
     protected $review;
     protected $telephone;
-    protected $type="http://schema.org/LocalBusiness";
+    protected $type = "http://schema.org/LocalBusiness";
+
 }

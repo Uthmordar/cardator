@@ -2,6 +2,8 @@
 
 namespace Uthmordar\Cardator;
 
+use Symfony\Component\DomCrawler\Crawler;
+
 /**
  * Coordinate all classes for the vendor and allows simple use of it
  */
@@ -15,7 +17,7 @@ class Cardator {
     private $executionTime;
     public $childArray;
 
-    public function __construct(Card\iCardatorGenerator $generator, Card\iCardatorContainer $container, Parser\iParser $parser) {
+    public function __construct(Card\CardatorGeneratorInterface $generator, Card\CardatorContainerInterface $container, Parser\ParserInterface $parser) {
         $this->generator = $generator;
         $this->container = $container;
         $this->parser = $parser;
@@ -64,7 +66,7 @@ class Cardator {
      * 
      * @param iCard $card
      */
-    public function saveCard(Card\lib\iCard $card) {
+    public function saveCard(Card\lib\CardInterface $card) {
         $this->container->addCard($card);
     }
 
@@ -99,8 +101,8 @@ class Cardator {
      * @param Crawler $scope
      * @param string $url
      */
-    private function setCardFromMD($scope, $url) {
-        $scope->each(function($node) use($url) {
+    private function setCardFromMD(Crawler $scope, $url) {
+        $scope->each(function(Crawler $node) use($url) {
             try {
                 $type = $this->parser->getCardType($node);
                 $card = $this->createCard($type);
@@ -152,9 +154,10 @@ class Cardator {
      * @param number $i
      * @param array $cards
      */
-    private function setRelationship(Card\lib\iCard $card, $i, $cards) {
+    private function setRelationship(Card\lib\CardInterface $card, $i, $cards) {
         $j = 1;
-        for ($k=0; $k<count($card->childList); $k++){
+        $nbChild=count($card->childList);
+        for ($k=0; $k<$nbChild; $k++){
             if(in_array($cards[$i + $j], $this->childArray)){
                 $card->{$card->childList[$k]} = $cards[ $i + $j ];
                 $j = ($cards[$i + $j]->child)? $j + $cards[$i + $j]->child : $j+1;

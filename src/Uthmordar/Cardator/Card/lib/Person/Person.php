@@ -2,8 +2,9 @@
 
 namespace Uthmordar\Cardator\Card\lib;
 
-class Person extends Thing{
-    protected $parents="Thing";
+class Person extends Thing {
+
+    protected $parents = "Thing";
     protected $additionalName;
     protected $address;
     protected $affiliation;
@@ -51,5 +52,6 @@ class Person extends Thing{
     protected $weigth;
     protected $workLocation;
     protected $worksFor;
-    protected $type="http://schema.org/Person";
+    protected $type = "http://schema.org/Person";
+
 }

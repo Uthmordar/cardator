@@ -2,8 +2,9 @@
 
 namespace Uthmordar\Cardator\Card\lib;
 
-class VideoGame extends SoftwareApplication{
-    protected $parents="Thing\CreativeWork\SoftwareApplication::Thing\CreativeWork\Game";
+class VideoGame extends SoftwareApplication {
+
+    protected $parents = "Thing\CreativeWork\SoftwareApplication::Thing\CreativeWork\Game";
     protected $actor;
     protected $characterAttribute;
     protected $cheatCode;
@@ -18,5 +19,6 @@ class VideoGame extends SoftwareApplication{
     protected $playMode;
     protected $quest;
     protected $trailer;
-    protected $type="http://schema.org/VideoGame";
+    protected $type = "http://schema.org/VideoGame";
+
 }

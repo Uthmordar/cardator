@@ -2,7 +2,7 @@
 
 namespace Uthmordar\Cardator\Parser;
 
-interface iParser {
+interface ParserInterface {
 
     public function setCrawler($url);
 
@@ -12,5 +12,5 @@ interface iParser {
 
     public function getCardType($elem);
 
-    public function setCardProperties($elem, \Uthmordar\Cardator\Card\lib\iCard $card);
+    public function setCardProperties($elem, \Uthmordar\Cardator\Card\lib\CardInterface $card);
 }

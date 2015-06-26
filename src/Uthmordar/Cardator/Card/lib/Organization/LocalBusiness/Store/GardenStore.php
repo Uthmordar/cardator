@@ -2,7 +2,9 @@
 
 namespace Uthmordar\Cardator\Card\lib;
 
-class GardenStore extends Store{
-    protected $parents="Thing\Organization\LocalBusiness\Store";
-    protected $type="http://schema.org/GardenStore";
+class GardenStore extends Store {
+
+    protected $parents = "Thing\Organization\LocalBusiness\Store";
+    protected $type = "http://schema.org/GardenStore";
+
 }

@@ -3,7 +3,7 @@
 namespace Uthmordar\Cardator\Parser\Facade\lib;
 
 use \Symfony\Component\DomCrawler\Crawler;
-use \Uthmordar\Cardator\Card\lib\iCard;
+use \Uthmordar\Cardator\Card\lib\CardInterface;
 use \Uthmordar\Cardator\Card\CardGenerator;
 
 /**
@@ -24,7 +24,7 @@ class MicroDataCrawler {
     }
 
     public static function newInstance() {
-        if (self::$instance == null) {
+        if (self::$instance === null) {
             self::$instance = new self();
         }
         return self::$instance;
@@ -39,7 +39,7 @@ class MicroDataCrawler {
      * @param iCard $card
      * @param boolean $isItemref
      */
-    public function getScopeContent(Crawler $node, iCard $card, $isItemref = false) {
+    public function getScopeContent(Crawler $node, CardInterface $card, $isItemref = false) {
         $content = $node->html();
         $cr = new Crawler($content);
         $cr->filter('[itemprop]')->each(function($node) use($card, $isItemref) {
@@ -57,7 +57,7 @@ class MicroDataCrawler {
      * @param boolean $isItemref
      * @return boolean
      */
-    private function setCardProperty(Crawler $node, iCard $card, $isItemref = false) {
+    private function setCardProperty(Crawler $node, CardInterface $card, $isItemref = false) {
         $property = $node->attr('itemprop');
         $nd = $node;
         if ($node->parents()->attr('itemscope') !== null) {
@@ -87,7 +87,7 @@ class MicroDataCrawler {
      * @param iCard $card
      * @return boolean
      */
-    private function manageRawProperty(Crawler $node, $prop, iCard $card) {
+    private function manageRawProperty(Crawler $node, $prop, CardInterface $card) {
         if ($node->attr('dk-raw')) {
             $card->$prop = $node->attr('dk-raw');
             return true;
@@ -106,7 +106,7 @@ class MicroDataCrawler {
      * @param iCard $card
      * @return boolean
      */
-    private function manageImgProperty(Crawler $node, $prop, iCard $card) {
+    private function manageImgProperty(Crawler $node, $prop, CardInterface $card) {
         $src = null;
         if ($node->attr('src')) {
             $src = $node->attr('src');
@@ -114,11 +114,9 @@ class MicroDataCrawler {
         if ($node->attr('content')) {
             $src = $node->attr('content');
         }
-        if ($src != null) {
+        if ($src !== null) {
             $url = (is_array($card->url)) ? $card->url[0] : $card->url;
             $card->$prop = $this->getUri($src, $url);
-            /*$img = (!strpos($src, '/') && $url[strlen($card->url) - 1] !== '/' && strrpos($url, '/') > 8 && !filter_var($src, FILTER_VALIDATE_URL)) ? substr($url, 0, strrpos($url, '/') + 1) . $src : $src;
-            $card->$prop = ($img[0] == '/') ? $url . $img : $img;*/
             return true;
         }
     }
@@ -131,7 +129,7 @@ class MicroDataCrawler {
      * @param iCard $card
      * @return boolean
      */
-    private function manageNumericProperty(Crawler $node, $prop, iCard $card) {
+    private function manageNumericProperty(Crawler $node, $prop, CardInterface $card) {
         if ($node->attr('value')) {
             $card->$prop = floatval($node->attr('value'));
             return true;
@@ -146,14 +144,11 @@ class MicroDataCrawler {
      * @param iCard $card
      * @return boolean
      */
-    private function manageLinkProperty(Crawler $node, $prop, iCard $card) {
+    private function manageLinkProperty(Crawler $node, $prop, CardInterface $card) {
         if ($node->attr('href')) {
             $href = $node->attr('href');
             $url = (is_array($card->url)) ? $card->url[0] : $card->url;
             $card->$prop = $this->getUri($href, $url);
-            /* $url = (is_array($card->url))? $card->url[0] : $card->url;
-              $link = (!strpos($href, '/') && $url[strlen($url) - 1] !== '/' && strrpos($url, '/') > 8 && !filter_var($href, FILTER_VALIDATE_URL)) ? substr($url, 0, strrpos($url, '/') + 1) . $href : $href;
-              $card->$prop = ($link[0] == '/') ? $url . $link : $link; */
             return true;
         }
     }
@@ -273,7 +268,7 @@ class MicroDataCrawler {
      * @param \Uthmordar\Cardator\Card\lib\iCard $card
      * @return boolean
      */
-    public function manageItemIdProperty(Crawler $node, iCard $card) {
+    public function manageItemIdProperty(Crawler $node, CardInterface $card) {
         if ($node->attr('itemid')) {
             $id = $node->attr('itemid');
             $split = explode(':', $id);
@@ -292,7 +287,7 @@ class MicroDataCrawler {
      * @param Crawler $crawler
      * @return boolean
      */
-    public function manageItemrefProperty(Crawler $node, iCard $card, $crawler) {
+    public function manageItemrefProperty(Crawler $node, CardInterface $card, Crawler $crawler) {
         if ($node->attr('itemref')) {
             $ids = explode(' ', $node->attr('itemref'));
             foreach ($ids as $id) {
@@ -313,7 +308,7 @@ class MicroDataCrawler {
      * @param boolean $isItemref
      * @return boolean
      */
-    private function nestedScope(Crawler $node, iCard $card, $property, $isItemref) {
+    private function nestedScope(Crawler $node, CardInterface $card, $property, $isItemref) {
         if ($node->attr('itemscope') !== null) {
             if ($isItemref) {
                 $child = $this->subCardGeneration($node, $card->url);
@@ -356,7 +351,7 @@ class MicroDataCrawler {
      * @param string $property
      * @return boolean
      */
-    private function updateChildList(iCard $card, $property) {
+    private function updateChildList(CardInterface $card, $property) {
         $data = $card->childList;
         array_push($data, $property);
         $card->childList = $data;

@@ -2,8 +2,9 @@
 
 namespace Uthmordar\Cardator\Card\lib;
 
-class PeopleAudience extends Audience{
-    protected $parents="Thing\Intangible\Audience";
+class PeopleAudience extends Audience {
+
+    protected $parents = "Thing\Intangible\Audience";
     protected $healthCondition;
     protected $requiredGender;
     protected $requiredMaxAge;
@@ -11,5 +12,6 @@ class PeopleAudience extends Audience{
     protected $suggestedGender;
     protected $suggestedMaxAge;
     protected $suggestedMinAge;
-    protected $type="http://schema.org/PeopleAudience";
+    protected $type = "http://schema.org/PeopleAudience";
+
 }

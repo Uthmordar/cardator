@@ -2,8 +2,9 @@
 
 namespace Uthmordar\Cardator\Card\lib;
 
-class PropertyValueSpecification extends Intangible{
-    protected $parents="Thing\Intangible";
+class PropertyValueSpecification extends Intangible {
+
+    protected $parents = "Thing\Intangible";
     protected $defaultValue;
     protected $maxValue;
     protected $minValue;
@@ -15,5 +16,6 @@ class PropertyValueSpecification extends Intangible{
     protected $valueName;
     protected $valuePattern;
     protected $valueRequired;
-    protected $type="http://schema.org/PropertyValueSpecification";
+    protected $type = "http://schema.org/PropertyValueSpecification";
+
 }

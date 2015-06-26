@@ -2,8 +2,9 @@
 
 namespace Uthmordar\Cardator\Card\lib;
 
-class StadiumOrArena extends CivicStructure{
-    protected $parents="Thing\Place\CivicStructure::Thing\Organization\LocalBusiness\SportsActivityLocation";
+class StadiumOrArena extends CivicStructure {
+
+    protected $parents = "Thing\Place\CivicStructure::Thing\Organization\LocalBusiness\SportsActivityLocation";
     protected $currenciesAccepted;
     protected $openingHours;
     protected $parentOrganization;
@@ -42,5 +43,6 @@ class StadiumOrArena extends CivicStructure{
     protected $taxID;
     protected $telephone;
     protected $vatID;
-    protected $type="http://schema.org/StadiumOrArena";
+    protected $type = "http://schema.org/StadiumOrArena";
+
 }

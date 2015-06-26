@@ -2,8 +2,9 @@
 
 namespace Uthmordar\Cardator\Card\lib;
 
-class Offer extends Intangible{
-    protected $parents="Thing\Intangible";
+class Offer extends Intangible {
+
+    protected $parents = "Thing\Intangible";
     protected $acceptedPaymentMethod;
     protected $addOn;
     protected $advanceBookingRequirement;
@@ -42,13 +43,14 @@ class Offer extends Intangible{
     protected $validFrom;
     protected $validThrough;
     protected $warranty;
-    protected $type="http://schema.org/Offer";
-    
-    public function __construct(){
+    protected $type = "http://schema.org/Offer";
+
+    public function __construct() {
         parent::__construct();
         $this->addFilter('availabilityEnds', 'filterDateTime');
         $this->addFilter('availabilityStarts', 'filterDateTime');
         $this->addFilter('validFrom', 'filterDateTime');
         $this->addFilter('validThrough', 'filterDateTime');
     }
+
 }

@@ -2,7 +2,9 @@
 
 namespace Uthmordar\Cardator\Card\lib;
 
-class HobbyShop extends Store{
-    protected $parents="Thing\Organization\LocalBusiness\Store";
-    protected $type="http://schema.org/HobbyShop";
+class HobbyShop extends Store {
+
+    protected $parents = "Thing\Organization\LocalBusiness\Store";
+    protected $type = "http://schema.org/HobbyShop";
+
 }

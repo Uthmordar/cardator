@@ -2,8 +2,9 @@
 
 namespace Uthmordar\Cardator\Card\lib;
 
-class Product extends Thing{
-    protected $parents="Thing";
+class Product extends Thing {
+
+    protected $parents = "Thing";
     protected $aggregateRating;
     protected $audience;
     protected $award;
@@ -25,5 +26,6 @@ class Product extends Thing{
     protected $manufacturer;
     protected $model;
     protected $mpn;
-    protected $type="http://schema.org/Product";
+    protected $type = "http://schema.org/Product";
+
 }

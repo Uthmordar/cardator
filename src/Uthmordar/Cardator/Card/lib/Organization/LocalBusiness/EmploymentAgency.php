@@ -2,7 +2,9 @@
 
 namespace Uthmordar\Cardator\Card\lib;
 
-class EmploymentAgency extends LocalBusiness{
-    protected $parents="Thing\Organization\LocalBusiness";
-    protected $type="http://schema.org/EmploymentAgency";
+class EmploymentAgency extends LocalBusiness {
+
+    protected $parents = "Thing\Organization\LocalBusiness";
+    protected $type = "http://schema.org/EmploymentAgency";
+
 }

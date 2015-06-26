@@ -2,7 +2,9 @@
 
 namespace Uthmordar\Cardator\Card\lib;
 
-class BeautySalon extends HealthAndBeautyBusiness{
-    protected $parents="Thing\Organization\LocalBusiness\HealthAndBeautyBusiness";
-    protected $type="http://schema.org/BeautySalon";
+class BeautySalon extends HealthAndBeautyBusiness {
+
+    protected $parents = "Thing\Organization\LocalBusiness\HealthAndBeautyBusiness";
+    protected $type = "http://schema.org/BeautySalon";
+
 }

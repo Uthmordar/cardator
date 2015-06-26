@@ -2,8 +2,9 @@
 
 namespace Uthmordar\Cardator\Card\lib;
 
-class FireStation extends CivicStructure{
-    protected $parents="Thing\Place\CivicStructure::Thing\Organization\LocalBusiness\EmergencyService";
+class FireStation extends CivicStructure {
+
+    protected $parents = "Thing\Place\CivicStructure::Thing\Organization\LocalBusiness\EmergencyService";
     protected $currenciesAccepted;
     protected $openingHours;
     protected $parentOrganization;
@@ -42,5 +43,6 @@ class FireStation extends CivicStructure{
     protected $taxID;
     protected $telephone;
     protected $vatID;
-    protected $type="http://schema.org/FireStation";
+    protected $type = "http://schema.org/FireStation";
+
 }

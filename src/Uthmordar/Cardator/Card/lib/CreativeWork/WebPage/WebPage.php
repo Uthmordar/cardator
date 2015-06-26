@@ -2,8 +2,9 @@
 
 namespace Uthmordar\Cardator\Card\lib;
 
-class WebPage extends CreativeWork{
-    protected $parents="Thing\CreativeWork";
+class WebPage extends CreativeWork {
+
+    protected $parents = "Thing\CreativeWork";
     protected $breadcrumb;
     protected $lastreviewed;
     protected $mainContentOfPage;
@@ -12,5 +13,6 @@ class WebPage extends CreativeWork{
     protected $reviewedBy;
     protected $significantLink;
     protected $specialty;
-    protected $type="http://schema.org/WebPage";
+    protected $type = "http://schema.org/WebPage";
+
 }

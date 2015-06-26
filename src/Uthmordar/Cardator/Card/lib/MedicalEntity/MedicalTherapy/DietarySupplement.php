@@ -2,8 +2,9 @@
 
 namespace Uthmordar\Cardator\Card\lib;
 
-class DietarySupplement extends MedicalTherapy{
-    protected $parents="Thing\MedicalEntity\MedicalTherapy";
+class DietarySupplement extends MedicalTherapy {
+
+    protected $parents = "Thing\MedicalEntity\MedicalTherapy";
     protected $activeIngredient;
     protected $background;
     protected $dosageForm;
@@ -16,5 +17,6 @@ class DietarySupplement extends MedicalTherapy{
     protected $recommendedIntake;
     protected $safetyConsideration;
     protected $targetPopulation;
-    protected $type="http://schema.org/DietarySupplement";
+    protected $type = "http://schema.org/DietarySupplement";
+
 }

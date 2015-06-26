@@ -2,8 +2,9 @@
 
 namespace Uthmordar\Cardator\Card\lib;
 
-class Event extends Thing{
-    protected $parents="Thing";
+class Event extends Thing {
+
+    protected $parents = "Thing";
     protected $aggregateRating;
     protected $attendee;
     protected $doorTime;
@@ -24,5 +25,6 @@ class Event extends Thing{
     protected $superEvent;
     protected $typicalAgeRange;
     protected $workPerformed;
-    protected $type="http://schema.org/Event";
+    protected $type = "http://schema.org/Event";
+
 }

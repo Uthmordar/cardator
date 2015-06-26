@@ -2,8 +2,9 @@
 
 namespace Uthmordar\Cardator\Card\lib;
 
-class MediaObject extends CreativeWork{
-    protected $parents="Thing\CreativeWork";
+class MediaObject extends CreativeWork {
+
+    protected $parents = "Thing\CreativeWork";
     protected $associatedArticle;
     protected $bitrate;
     protected $contentSize;
@@ -20,5 +21,6 @@ class MediaObject extends CreativeWork{
     protected $requiresSubscription;
     protected $uploadDate;
     protected $width;
-    protected $type="http://schema.org/MediaObject";
+    protected $type = "http://schema.org/MediaObject";
+
 }

@@ -2,8 +2,9 @@
 
 namespace Uthmordar\Cardator\Card\lib;
 
-class MusicComposition extends CreativeWork{
-    protected $parents="Thing\CreativeWork";
+class MusicComposition extends CreativeWork {
+
+    protected $parents = "Thing\CreativeWork";
     protected $composer;
     protected $firstPerformance;
     protected $includedComposition;
@@ -13,5 +14,6 @@ class MusicComposition extends CreativeWork{
     protected $musicCompositionForm;
     protected $musicalKey;
     protected $recordedAs;
-    protected $type="http://schema.org/MusicComposition";
+    protected $type = "http://schema.org/MusicComposition";
+
 }

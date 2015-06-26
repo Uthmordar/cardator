@@ -2,8 +2,9 @@
 
 namespace Uthmordar\Cardator\Card\lib;
 
-class VisualArtwork extends CreativeWork{
-    protected $parents="Thing\CreativeWork";
+class VisualArtwork extends CreativeWork {
+
+    protected $parents = "Thing\CreativeWork";
     protected $artEdition;
     protected $artMedium;
     protected $artform;
@@ -11,5 +12,6 @@ class VisualArtwork extends CreativeWork{
     protected $depth;
     protected $height;
     protected $width;
-    protected $type="http://schema.org/VisualArtwork";
+    protected $type = "http://schema.org/VisualArtwork";
+
 }

@@ -2,8 +2,9 @@
 
 namespace Uthmordar\Cardator\Card\lib;
 
-class Ticket extends Intangible{
-    protected $parents="Thing\Intangible";
+class Ticket extends Intangible {
+
+    protected $parents = "Thing\Intangible";
     protected $dateIssued;
     protected $issuedBy;
     protected $priceCurrency;
@@ -12,5 +13,6 @@ class Ticket extends Intangible{
     protected $ticketedSeat;
     protected $totalPrice;
     protected $underName;
-    protected $type="http://schema.org/Ticket";
+    protected $type = "http://schema.org/Ticket";
+
 }

@@ -2,8 +2,9 @@
 
 namespace Uthmordar\Cardator\Card\lib;
 
-class Recipe extends CreativeWork{
-    protected $parents="Thing\CreativeWork";
+class Recipe extends CreativeWork {
+
+    protected $parents = "Thing\CreativeWork";
     protected $cookTime;
     protected $cookingMethod;
     protected $nutrition;
@@ -14,5 +15,6 @@ class Recipe extends CreativeWork{
     protected $recipeInstructions;
     protected $recipeYield;
     protected $totalTime;
-    protected $type="http://schema.org/Recipe";
+    protected $type = "http://schema.org/Recipe";
+
 }

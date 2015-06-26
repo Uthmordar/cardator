@@ -2,8 +2,9 @@
 
 namespace Uthmordar\Cardator\Card\lib;
 
-class Place extends Thing{
-    protected $parents="Thing";
+class Place extends Thing {
+
+    protected $parents = "Thing";
     protected $address;
     protected $aggregateRating;
     protected $containedIn;
@@ -18,5 +19,6 @@ class Place extends Thing{
     protected $review;
     protected $telephone;
     protected $recordedIn;
-    protected $type="http://schema.org/Place";
+    protected $type = "http://schema.org/Place";
+
 }

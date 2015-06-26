@@ -2,8 +2,9 @@
 
 namespace Uthmordar\Cardator\Card\lib;
 
-class Service extends Intangible{
-    protected $parents="Thing\Intangible";
+class Service extends Intangible {
+
+    protected $parents = "Thing\Intangible";
     protected $aggregateRating;
     protected $availableChannel;
     protected $provider;
@@ -11,5 +12,6 @@ class Service extends Intangible{
     protected $serviceArea;
     protected $serviceOutput;
     protected $serviceType;
-    protected $type="http://schema.org/Service";
+    protected $type = "http://schema.org/Service";
+
 }

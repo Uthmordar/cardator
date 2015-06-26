@@ -2,8 +2,9 @@
 
 namespace Uthmordar\Cardator\Card\lib;
 
-class ContactPoint extends StructuredValue{
-    protected $parents="Thing\Intangible\StructuredValue";
+class ContactPoint extends StructuredValue {
+
+    protected $parents = "Thing\Intangible\StructuredValue";
     protected $areaServed;
     protected $availableLanguage;
     protected $contactOption;
@@ -12,5 +13,6 @@ class ContactPoint extends StructuredValue{
     protected $hoursAvailable;
     protected $productSupported;
     protected $telephone;
-    protected $type="http://schema.org/ContactPoint";
+    protected $type = "http://schema.org/ContactPoint";
+
 }
