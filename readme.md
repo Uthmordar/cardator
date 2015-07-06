@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/Uthmordar/cardator.svg)](https://travis-ci.org/Uthmordar/cardator)
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/4d9c8cb3-c1da-470a-971a-5f08493741ac/mini.png)](https://insight.sensiolabs.com/projects/4d9c8cb3-c1da-470a-971a-5f08493741ac)
 
 ## Cardator Package
 
